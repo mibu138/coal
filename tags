@@ -1,0 +1,88 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+A	m_math.h	/^    Vec2 A;$/;"	m	struct:__anon9
+B	m_math.h	/^    Vec2 B;$/;"	m	struct:__anon9
+CC	Makefile	/^CC = gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -Wall -Wno-missing-braces -Wno-attributes -fPIC$/;"	m
+CROSS	m_math.c	7;"	d	file:
+DEPS	Makefile	/^DEPS =  \\$/;"	m
+DOT	m_math.c	12;"	d	file:
+EPSILON	m_math.c	515;"	d	file:
+INFLAGS	Makefile	/^INFLAGS = -I$(HOME)\/dev$/;"	m
+LDFLAGS	Makefile	/^LDFLAGS = -L\/opt\/hfs18.0\/dsolib -L$(HOME)\/lib$/;"	m
+LIB	Makefile	/^LIB = $(HOME)\/lib$/;"	m
+LIBNAME	Makefile	/^LIBNAME = carbon$/;"	m
+LIBS	Makefile	/^LIBS = -lm $/;"	m
+M_MATH_H	m_math.h	2;"	d
+Mat2	m_math.h	/^} Mat2;$/;"	t	typeref:struct:__anon5
+Mat3	m_math.h	/^} Mat3;$/;"	t	typeref:struct:__anon6
+Mat4	m_math.h	/^} Mat4;$/;"	t	typeref:struct:__anon7
+NAME	Makefile	/^NAME = carbon$/;"	m
+O	Makefile	/^O = build$/;"	m
+OBJS	Makefile	/^OBJS =  \\$/;"	m
+Ray	m_math.h	/^} Ray;$/;"	t	typeref:struct:__anon8
+SUB	m_math.c	14;"	d	file:
+Segment	m_math.h	/^} Segment;$/;"	t	typeref:struct:__anon9
+Vec2	m_math.h	/^} Vec2;$/;"	t	typeref:struct:__anon1
+Vec3	m_math.h	/^} Vec3;$/;"	t	typeref:union:__anon2
+Vec4	m_math.h	/^} Vec4;$/;"	t	typeref:struct:__anon4
+dir	m_math.h	/^    Vec2 dir;$/;"	m	struct:__anon8
+i	m_math.h	/^        float i;$/;"	m	struct:__anon2::__anon3
+j	m_math.h	/^        float j;$/;"	m	struct:__anon2::__anon3
+k	m_math.h	/^        float k;$/;"	m	struct:__anon2::__anon3
+m_Add	m_math.c	/^void m_Add(const Vec2 v1, Vec2* v2)$/;"	f
+m_Add_Vec3	m_math.c	/^Vec3 m_Add_Vec3(const Vec3* a, const Vec3* b)$/;"	f
+m_BuildFromBasis_Mat4	m_math.c	/^Mat4 m_BuildFromBasis_Mat4(const float x[3], const float y[3], const float z[3])$/;"	f
+m_BuildPerspective	m_math.c	/^Mat4 m_BuildPerspective(const float nearDist, const float farDist)$/;"	f
+m_BuildRotate	m_math.c	/^Mat4 m_BuildRotate(const float angle, const Vec3* axis)$/;"	f
+m_Cross	m_math.c	/^Vec3 m_Cross(const Vec3 *a, const Vec3 *b)$/;"	f
+m_Det2x2	m_math.c	/^float m_Det2x2(const Mat2 m)$/;"	f
+m_Dot	m_math.c	/^float m_Dot(const Vec3* a, const Vec3* b)$/;"	f
+m_GetLocalZ_Mat4	m_math.c	/^Vec3 m_GetLocalZ_Mat4(const Mat4 *m)$/;"	f
+m_GetTranslation_Mat4	m_math.c	/^Vec3 m_GetTranslation_Mat4(const Mat4* m)$/;"	f
+m_Ident_Mat4	m_math.c	/^Mat4 m_Ident_Mat4(void)$/;"	f
+m_IntersectTriangle	m_math.c	/^int m_IntersectTriangle(const Vec3* orig, const Vec3* dir, $/;"	f
+m_Invert4x4	m_math.c	/^Mat4 m_Invert4x4(const Mat4* const mat)$/;"	f
+m_Length	m_math.c	/^float m_Length(const Vec2 v)$/;"	f
+m_Length2	m_math.c	/^float m_Length2(const Vec2 v)$/;"	f
+m_Length_Vec3	m_math.c	/^float m_Length_Vec3(const Vec3* v)$/;"	f
+m_Length_Vec4	m_math.c	/^float m_Length_Vec4(const Vec4* v)$/;"	f
+m_Lerp_Vec3	m_math.c	/^Vec3 m_Lerp_Vec3(const Vec3* a, const Vec3* b, const float t)$/;"	f
+m_LookAt	m_math.c	/^Mat4 m_LookAt(const Vec3* pos, const Vec3* target, const Vec3* up)$/;"	f
+m_Mult_Mat2Vec2	m_math.c	/^static void m_Mult_Mat2Vec2(const Mat2* m, Vec2* v)$/;"	f	file:
+m_Mult_Mat4	m_math.c	/^Mat4 m_Mult_Mat4(const Mat4* a, const Mat4* b)$/;"	f
+m_Mult_Mat4Vec3	m_math.c	/^Vec3 m_Mult_Mat4Vec3(const Mat4* m, const Vec3* v)$/;"	f
+m_Mult_Mat4Vec4	m_math.c	/^Vec4 m_Mult_Mat4Vec4(const Mat4* m, const Vec4* v)$/;"	f
+m_Normalize_Vec3	m_math.c	/^Vec3 m_Normalize_Vec3(const Vec3* v)$/;"	f
+m_Normalize_Vec4	m_math.c	/^Vec4 m_Normalize_Vec4(const Vec4* v)$/;"	f
+m_PolarToCart	m_math.c	/^Vec2 m_PolarToCart(const float angle, const float radius)$/;"	f
+m_Rand	m_math.c	/^float m_Rand(void)$/;"	f
+m_RandNeg	m_math.c	/^float m_RandNeg(void)$/;"	f
+m_RotateY_Mat4	m_math.c	/^Mat4 m_RotateY_Mat4(const float angle, const Mat4* m)$/;"	f
+m_RotateY_Vec3	m_math.c	/^Vec3 m_RotateY_Vec3(const float angle, const Vec3 *v)$/;"	f
+m_RotateZ_Mat4	m_math.c	/^Mat4 m_RotateZ_Mat4(const float angle, const Mat4* m)$/;"	f
+m_Rotate_Vec2	m_math.c	/^void m_Rotate_Vec2(const float angle, Vec2* v)$/;"	f
+m_Scale	m_math.c	/^void m_Scale(const float s, Vec2* v)$/;"	f
+m_ScaleNonUniform_Mat4	m_math.c	/^void m_ScaleNonUniform_Mat4(const Vec3 s, Mat4 *m)$/;"	f
+m_ScaleUniform_Mat4	m_math.c	/^void m_ScaleUniform_Mat4(const float s, Mat4 *m)$/;"	f
+m_Scale_Vec3	m_math.c	/^Vec3 m_Scale_Vec3(const float s, const Vec3* v)$/;"	f
+m_Sub_Vec3	m_math.c	/^Vec3 m_Sub_Vec3(const Vec3* a, const Vec3* b)$/;"	f
+m_Subtract	m_math.c	/^Vec2 m_Subtract(const Vec2 v1, const Vec2 v2)$/;"	f
+m_Translate	m_math.c	/^void m_Translate(const Vec2 t, Vec2* v)$/;"	f
+m_Translate_Mat4	m_math.c	/^Mat4 m_Translate_Mat4(const Vec3 t, const Mat4 *m)$/;"	f
+m_Transpose_Mat4	m_math.c	/^Mat4 m_Transpose_Mat4(const Mat4 *m)$/;"	f
+orig	m_math.h	/^    Vec2 orig;$/;"	m	struct:__anon8
+x	m_math.h	/^    float x;$/;"	m	struct:__anon1
+x	m_math.h	/^    float x[3];$/;"	m	union:__anon2
+x	m_math.h	/^    float x[3][3];$/;"	m	struct:__anon6
+x	m_math.h	/^    float x[4];$/;"	m	struct:__anon4
+x	m_math.h	/^    float x[4][4];$/;"	m	struct:__anon7
+x00	m_math.h	/^    float x00, x01, $/;"	m	struct:__anon5
+x01	m_math.h	/^    float x00, x01, $/;"	m	struct:__anon5
+x10	m_math.h	/^          x10, x11;$/;"	m	struct:__anon5
+x11	m_math.h	/^          x10, x11;$/;"	m	struct:__anon5
+y	m_math.h	/^    float y;$/;"	m	struct:__anon1
