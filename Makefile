@@ -5,11 +5,11 @@ LDFLAGS = -L/opt/hfs18.0/dsolib -L$(HOME)/lib
 INFLAGS = -I$(HOME)/dev
 LIBS = -lm 
 LIB = $(HOME)/lib
-LIBNAME = carbon
+LIBNAME = coal
 
 O = build
 
-NAME = carbon
+NAME = coal
 
 DEPS =  \
 		m_math.h \
