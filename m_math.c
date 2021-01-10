@@ -1,8 +1,8 @@
 #include "m_math.h"
+#include "util.h"
 #include <stdlib.h>
-#include <math.h>
 #include <assert.h>
-
+#include <stdio.h>
 
 #define CROSS(dest,v1,v2) \
     dest[0]=v1[1]*v2[2]-v1[2]*v2[1]; \
@@ -216,7 +216,7 @@ Mat4 m_Translate_Mat4(const Vec3 t, const Mat4 *m)
         0,     0,   1, 0,
         t.x[0], t.x[1], t.x[2], 1
     };
-    return m_Mult_Mat4(&trans, m);
+    return m_Mult_Mat4(m, &trans);
 }
 
 Mat4 m_BuildFromBasis_Mat4(const float x[3], const float y[3], const float z[3])
@@ -240,8 +240,23 @@ Mat4 m_LookAt(const Vec3* pos, const Vec3* target, const Vec3* up)
     const Vec3 y = m_Normalize_Vec3(&temp);
     const Vec3 z = m_Scale_Vec3(-1, &dir);
     Mat4 m = m_BuildFromBasis_Mat4(x.x, y.x, z.x);
+    m = m_Translate_Mat4(*pos, &m);
+    return m;
+}
+
+Mat4 m_LookAt_old(const Vec3* pos, const Vec3* target, const Vec3* up)
+{
+    Vec3 temp = m_Sub_Vec3(target, pos);
+    const Vec3 dir = m_Normalize_Vec3(&temp);
+    temp = m_Cross(&dir, up);
+    const Vec3 x = m_Normalize_Vec3(&temp);
+    temp = m_Cross(&x, &dir);
+    const Vec3 y = m_Normalize_Vec3(&temp);
+    const Vec3 z = m_Scale_Vec3(-1, &dir);
+    Mat4 m = m_BuildFromBasis_Mat4(x.x, y.x, z.x);
     m = m_Transpose_Mat4(&m);
     m = m_Translate_Mat4(m_Scale_Vec3(-1, pos), &m);
+    //m = m_Translate_Mat4(*pos, &m);
     return m;
 }
 
