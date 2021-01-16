@@ -527,6 +527,23 @@ Mat4 m_Invert4x4(const Mat4* const mat)
     return out;
 }
 
+void coal_SetSeed(unsigned int seed)
+{
+    srandom(seed);
+}
+
+Vec3 coal_RandVec3(const Vec2 range)
+{
+    const float width = range.y - range.x;
+    float x = (float)random() / (float)RAND_MAX;
+    float y = (float)random() / (float)RAND_MAX;
+    float z = (float)random() / (float)RAND_MAX;
+    x = x * width + range.x; 
+    y = y * width + range.x; 
+    z = z * width + range.x; 
+    return (Vec3){x, y, z};
+}
+
 #define EPSILON 0.000001
 // Moller & Trumbore triangle intersection algorithm
 // this culls all triangles facing away

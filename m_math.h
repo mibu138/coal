@@ -85,5 +85,6 @@ int   m_IntersectTriangle(const Vec3* orig, const Vec3* dir,
         const Vec3* vert0, const Vec3* vert1, const Vec3* vert2,
         float* t, float* u, float* v);
 Vec3 m_Lerp_Vec3(const Vec3* a, const Vec3* b, const float t);
+Vec3 coal_RandVec3(const Vec2 range);
 
 #endif /* end of include guard: M_MATH_H */
