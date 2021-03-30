@@ -45,8 +45,8 @@ Mat4 m_BuildPerspective(const float nearDist, const float farDist)
      * 0   0   A  -1
      * 0   0   B   0
      *
-     * A = -f / (f - n)
-     * B = - (f * n) / (f - n)
+     * A = f / (n - f)
+     * B = (f * n) / (n - f)
      *
      * f = distance to far clip plane from camera
      * n = distance to close clip plane from camera
@@ -54,10 +54,11 @@ Mat4 m_BuildPerspective(const float nearDist, const float farDist)
      * Note: n cannot be 0!
      * TODO: derive this for yourself.
      */
+    assert(nearDist > 0.00001);
     const float f = farDist;
     const float n = nearDist;
-    const float A = -1 * f / (f - n);
-    const float B = -1 * f * n / (f - n);
+    const float A = f / (n - f);
+    const float B = f * n / (n - f);
     Mat4 m = {
         1,   0,  0,  0,
         0,  -1,  0,  0,
@@ -304,6 +305,11 @@ void m_Scale(const float s, Vec2* v)
     v->y *= s;
 }
 
+float m_Distance(const Vec2 a, const Vec2 b)
+{
+    return m_Length(m_Subtract(a, b));
+}
+
 float m_Length(const Vec2 v)
 {
     return sqrt(m_Length2(v));
@@ -530,6 +536,11 @@ Mat4 m_Invert4x4(const Mat4* const mat)
 void coal_SetSeed(unsigned int seed)
 {
     srandom(seed);
+}
+
+float coal_Rand(void)
+{
+    return (float)random() / (float)RAND_MAX;
 }
 
 Vec3 coal_RandVec3(const Vec2 range)

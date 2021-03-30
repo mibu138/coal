@@ -71,6 +71,7 @@ void m_ScaleNonUniform_Mat4(const Vec3 s, Mat4 *m);
 void m_Translate(const Vec2 t, Vec2*);
 void m_Scale(const float scale, Vec2*);
 void m_Add(const Vec2, Vec2*);
+float m_Distance(const Vec2 a, const Vec2 b);
 Vec2 m_Subtract(const Vec2, const Vec2);
 //returns a random float between 0 and 1
 float m_Rand(void); 
@@ -85,6 +86,7 @@ int   m_IntersectTriangle(const Vec3* orig, const Vec3* dir,
         const Vec3* vert0, const Vec3* vert1, const Vec3* vert2,
         float* t, float* u, float* v);
 Vec3 m_Lerp_Vec3(const Vec3* a, const Vec3* b, const float t);
+float coal_Rand(void);
 Vec3 coal_RandVec3(const Vec2 range);
 
 #endif /* end of include guard: M_MATH_H */
