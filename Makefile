@@ -13,10 +13,12 @@ NAME = coal
 
 DEPS =  \
 		m_math.h \
+		m.h \
 		util.h
 
 OBJS =  \
 		$(O)/m_math.o \
+		$(O)/m.o \
 		$(O)/util.o
 
 debug: CFLAGS += -g -DVERBOSE=1

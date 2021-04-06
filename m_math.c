@@ -543,15 +543,23 @@ float coal_Rand(void)
     return (float)random() / (float)RAND_MAX;
 }
 
-Vec3 coal_RandVec3(const Vec2 range)
+float coal_RandRange(float min, float max)
 {
-    const float width = range.y - range.x;
+    const float width = max - min;
+    float x = (float)random() / (float)RAND_MAX;
+    x = x * width + min;
+    return x;
+}
+
+Vec3 coal_RandVec3(float min, float max)
+{
+    const float width = max - min;
     float x = (float)random() / (float)RAND_MAX;
     float y = (float)random() / (float)RAND_MAX;
     float z = (float)random() / (float)RAND_MAX;
-    x = x * width + range.x; 
-    y = y * width + range.x; 
-    z = z * width + range.x; 
+    x = x * width + min; 
+    y = y * width + min; 
+    z = z * width + min; 
     return (Vec3){x, y, z};
 }
 

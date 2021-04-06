@@ -3,12 +3,12 @@
 
 #include <math.h>
 
-typedef struct {
+typedef struct Vec2 {
     float x;
     float y;
 } Vec2;
 
-typedef union {
+typedef union Vec3 {
     float x[3];
     struct {
         float i;
@@ -17,29 +17,29 @@ typedef union {
     };
 } Vec3;
 
-typedef struct {
+typedef struct Vec4 {
     float x[4];
 } Vec4;
 
-typedef struct {
+typedef struct Mat2 {
     float x00, x01, 
           x10, x11;
 } Mat2;
 
-typedef struct {
+typedef struct Mat3 {
     float x[3][3];
 } Mat3;
 
-typedef struct {
+typedef struct Mat4 {
     float x[4][4];
 } Mat4;
 
-typedef struct {
+typedef struct Ray {
     Vec2 orig;
     Vec2 dir;
 } Ray;
 
-typedef struct {
+typedef struct Segment {
     Vec2 A;
     Vec2 B;
 } Segment;
@@ -87,6 +87,7 @@ int   m_IntersectTriangle(const Vec3* orig, const Vec3* dir,
         float* t, float* u, float* v);
 Vec3 m_Lerp_Vec3(const Vec3* a, const Vec3* b, const float t);
 float coal_Rand(void);
-Vec3 coal_RandVec3(const Vec2 range);
+float coal_RandRange(float min, float max);
+Vec3 coal_RandVec3(float min, float max);
 
 #endif /* end of include guard: M_MATH_H */

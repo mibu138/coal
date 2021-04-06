@@ -27,4 +27,3 @@ void coal_PrintMat4(const Mat4 * m)
         printf("\n");
     }
 }
-
