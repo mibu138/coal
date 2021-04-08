@@ -535,18 +535,18 @@ Mat4 m_Invert4x4(const Mat4* const mat)
 
 void coal_SetSeed(unsigned int seed)
 {
-    srandom(seed);
+    srand(seed);
 }
 
 float coal_Rand(void)
 {
-    return (float)random() / (float)RAND_MAX;
+    return (float)rand() / (float)RAND_MAX;
 }
 
 float coal_RandRange(float min, float max)
 {
     const float width = max - min;
-    float x = (float)random() / (float)RAND_MAX;
+    float x = (float)rand() / (float)RAND_MAX;
     x = x * width + min;
     return x;
 }
@@ -554,9 +554,9 @@ float coal_RandRange(float min, float max)
 Vec3 coal_RandVec3(float min, float max)
 {
     const float width = max - min;
-    float x = (float)random() / (float)RAND_MAX;
-    float y = (float)random() / (float)RAND_MAX;
-    float z = (float)random() / (float)RAND_MAX;
+    float x = (float)rand() / (float)RAND_MAX;
+    float y = (float)rand() / (float)RAND_MAX;
+    float z = (float)rand() / (float)RAND_MAX;
     x = x * width + min; 
     y = y * width + min; 
     z = z * width + min; 
