@@ -6,14 +6,17 @@ ifeq ($(OS), WIN)
 	OS_HEADERS = $(WIN_HEADERS)
 	LIBEXT = dll
 	HOMEDIR =  "$(HOMEDRIVE)/$(HOMEPATH)"
+	XEXT = .exe
 else
 	OS_HEADERS = $(UNIX_HEADERS)
 	LIBEXT = so
 	HOMEDIR =  $(HOME)
 endif
 LIBDIR  = $(HOMEDIR)/lib
-LIBNAME = coal
-LIBPATH = $(LIBDIR)/lib$(LIBNAME).$(LIBEXT)
+NAME    = coal
+LIBNAME = lib$(NAME).$(LIBEXT)
+LIBPATH = $(LIBDIR)/$(LIBNAME)
+TESTNAME = $(NAME)$(XEXT)
 
 O = build
 
@@ -35,16 +38,19 @@ debug: all
 release: CFLAGS += -DNDEBUG -O3
 release: all
 
-all: lib 
+all: lib test
 
 clean: 
-	rm -f $(O)/* $(LIBPATH)
+	rm -f $(O)/* $(LIBPATH) $(TESTNAME)
 
 tags:
 	ctags -R .
 
 lib: $(OBJS) $(DEPS) 
-	$(CC) -shared -o $(LIBPATH) $(OBJS)
+	$(CC) -shared -o $(LIBPATH) $(OBJS) $(LIBS)
+
+test: $(OBJS) $(DEPS)
+	$(CC) -L$(LIBDIR) coaltest.c -o $(TESTNAME) -l$(NAME)
 
 $(O)/%.o:  %.c $(DEPS)
 	$(CC) $(CFLAGS) $(INFLAGS) -c $< -o $@
