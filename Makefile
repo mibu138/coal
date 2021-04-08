@@ -1,11 +1,18 @@
 CC = gcc
 
 CFLAGS = -Wall -Wno-missing-braces -Wno-attributes -fPIC
-LDFLAGS = -L/opt/hfs18.0/dsolib -L$(HOME)/lib
-INFLAGS = -I$(HOME)/dev
 LIBS = -lm 
-LIB = .
+ifeq ($(OS), WIN)
+	OS_HEADERS = $(WIN_HEADERS)
+	LIBEXT = dll
+	HOMEDIR =  "$(HOMEDRIVE)/$(HOMEPATH)"
+else
+	OS_HEADERS = $(UNIX_HEADERS)
+	LIBEXT = so
+	HOMEDIR =  $(HOME)
+LIBDIR  = $(HOMEDIR)/lib
 LIBNAME = coal
+LIBPATH = $(LIBDIR)/lib$(LIBNAME).$(LIBEXT)
 
 O = build
 
@@ -27,20 +34,16 @@ debug: all
 release: CFLAGS += -DNDEBUG -O3
 release: all
 
-all: lib tags 
+all: lib 
 
 clean: 
-	rm -f $(O)/* $(LIB)/$(LIBNAME) 
+	rm -f $(O)/* $(LIBPATH)
 
 tags:
 	ctags -R .
 
 lib: $(OBJS) $(DEPS) 
-	$(CC) -shared -o $(LIB)/lib$(LIBNAME).so $(OBJS)
-
-staticlib: $(OBJS) $(DEPS) shaders
-	ar rcs $(LIB)/lib$(NAME).a $(OBJS)
+	$(CC) -shared -o $(LIBPATH) $(OBJS)
 
 $(O)/%.o:  %.c $(DEPS)
 	$(CC) $(CFLAGS) $(INFLAGS) -c $< -o $@
-
