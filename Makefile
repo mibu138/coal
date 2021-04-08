@@ -10,6 +10,7 @@ else
 	OS_HEADERS = $(UNIX_HEADERS)
 	LIBEXT = so
 	HOMEDIR =  $(HOME)
+endif
 LIBDIR  = $(HOMEDIR)/lib
 LIBNAME = coal
 LIBPATH = $(LIBDIR)/lib$(LIBNAME).$(LIBEXT)
