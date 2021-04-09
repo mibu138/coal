@@ -2,7 +2,12 @@ CC = gcc
 
 CFLAGS = -Wall -Wno-missing-braces -Wno-attributes -fPIC
 LIBS = -lm 
-ifeq ($(OS), WIN)
+ifeq ($(W), 1)
+	HOMEDIR = $(HOME)
+	CC = i686-w64-mingw32-gcc 
+	LIBEXT = dll
+	XEXT = .exe
+else ifeq ($(OS), WIN)
 	OS_HEADERS = $(WIN_HEADERS)
 	LIBEXT = dll
 	HOMEDIR =  "$(HOMEDRIVE)/$(HOMEPATH)"
@@ -16,7 +21,7 @@ LIBDIR  = $(HOMEDIR)/lib
 NAME    = coal
 LIBNAME = lib$(NAME).$(LIBEXT)
 LIBPATH = $(LIBDIR)/$(LIBNAME)
-TESTNAME = $(NAME)$(XEXT)
+TESTNAME = $(NAME)test$(XEXT)
 
 O = build
 
@@ -35,13 +40,16 @@ OBJS =  \
 debug: CFLAGS += -g -DVERBOSE=1
 debug: all
 
+win: OS = WIN
+win: all
+
 release: CFLAGS += -DNDEBUG -O3
 release: all
 
 all: lib test
 
 clean: 
-	rm -f $(O)/* $(LIBPATH) $(TESTNAME)
+	rm -f $(O)/* $(LIBPATH) $(TESTNAME) $(TESTNAME).exe
 
 tags:
 	ctags -R .
