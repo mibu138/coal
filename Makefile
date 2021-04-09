@@ -1,16 +1,18 @@
+
+ifeq ($(OS), Windows_NT)
+	OS = WIN
+else 
+	OS = UNIX
+endif
+
 CC = gcc
 
 CFLAGS = -Wall -Wno-missing-braces -Wno-attributes -fPIC
 LIBS = -lm 
-ifeq ($(W), 1)
-	HOMEDIR = $(HOME)
-	CC = i686-w64-mingw32-gcc 
-	LIBEXT = dll
-	XEXT = .exe
-else ifeq ($(OS), WIN)
+ifeq ($(OS), WIN)
 	OS_HEADERS = $(WIN_HEADERS)
 	LIBEXT = dll
-	HOMEDIR =  "$(HOMEDRIVE)/$(HOMEPATH)"
+	HOMEDIR =  C:
 	XEXT = .exe
 else
 	OS_HEADERS = $(UNIX_HEADERS)
