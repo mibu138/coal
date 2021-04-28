@@ -10,13 +10,9 @@ set(PUBLIC_HEADERS
     m_math.h
     util.h)
 
-add_library(coal SHARED ${SRCS})
-set_target_properties(coal PROPERTIES PUBLIC_HEADER "${PUBLIC_HEADERS}")
+add_library(${LIBRARY_NAME} SHARED ${SRCS})
+set_target_properties(${LIBRARY_NAME} PROPERTIES PUBLIC_HEADER "${PUBLIC_HEADERS}")
 
-install(TARGETS coal 
-    LIBRARY DESTINATION lib 
-    PUBLIC_HEADER DESTINATION include/coal)
-
-install(TARGETS coal 
-    LIBRARY DESTINATION ${HOUDINI_TOOL_INS_DIR}/lib 
-    PUBLIC_HEADER DESTINATION ${HOUDINI_TOOL_INS_DIR}/include/coal)
+install(TARGETS ${LIBRARY_NAME} 
+    LIBRARY DESTINATION ${INSTALL_ROOT}lib 
+    PUBLIC_HEADER DESTINATION ${INSTALL_ROOT}include/coal)

@@ -5,4 +5,7 @@ project(Coal)
 set(CMAKE_MODULE_PATH "/home/michaelb/dev/cmake")
 include(global)
 
+set(LIBRARY_NAME coal)
+
 add_subdirectory(src)
+
