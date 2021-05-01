@@ -1,9 +1,8 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.17)
 
 project(Coal)
 
-set(CMAKE_MODULE_PATH "/home/michaelb/dev/cmake")
-include(global)
+set(CMAKE_INSTALL_MESSAGE LAZY)
 
 set(LIBRARY_NAME coal)
 
