@@ -1,1 +1,1 @@
-# coal
+Simple C Math library
