@@ -86,7 +86,7 @@ Vec3 m_RotateY_Vec3(const float angle, const Vec3 *v)
     return m_Mult_Mat4Vec3(&m, v);
 }
 
-Vec3 m_Add_Vec3(const Vec3* a, const Vec3* b)
+Vec3 m_Add_Vec3(const Vec3 a, const Vec3 b)
 {
     return (Vec3){
         a->x[0] + b->x[0], 
