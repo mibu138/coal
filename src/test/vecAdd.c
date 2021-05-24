@@ -2,11 +2,11 @@
 
 int main(int argc, char *argv[])
 {
-    Vec3 a = {.x[0] = 1, .x[1] = 0, .x[2] = 0};
-    Vec3 b = {.x[0] = 1, .x[1] = 0, .x[2] = 0};
-    Vec3 c = m_Add_Vec3(&a, &b);
+    Vec3 a = {1, 0, 0};
+    Vec3 b = {1, 0, 0};
+    Vec3 c = coal_Add_Vec3(a, b);
 
-    if (c.x[0] != 2)
+    if (c.x != 2)
         return 1;
     return 0;
 }
