@@ -9,5 +9,5 @@ include(header)
 include(author_library)
 
 add_subdirectory(cmake)
-add_subdirectory(src/lib/coal)
+add_subdirectory(src/lib)
 add_subdirectory(src/test)

@@ -1,4 +1,4 @@
-#include <coal/coal.h>
+#include "linalg.h"
 
 int main(int argc, char *argv[])
 {
