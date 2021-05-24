@@ -1,0 +1,13 @@
+author_library(coal 
+    EXPORT_NAME 
+        Coal
+    SOURCES
+        linalg.c
+        util.c
+    PUBLIC_HEADERS
+        coal.h
+        linalg.h
+        util.h
+    DEPENDENCIES
+        m
+        )
