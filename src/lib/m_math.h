@@ -61,7 +61,7 @@ Vec4 coal_Normalize_Vec4(Vec4 v);
 Vec3 coal_Scale_Vec3(float s, Vec3 v);
 Vec3 coal_Cross(Vec3 a, Vec3 b);
 Mat4 coal_LookAt(Vec3 pos, Vec3 target, Vec3 up);
-void coal_Rotate_Vec2(float angle /* radians */, Vec2);
+Vec2 coal_Rotate_Vec2(float angle /* radians */, Vec2);
 Mat4 coal_RotateY_Mat4(float angle, Mat4 m);
 Mat4 coal_BuildFromBasis_Mat4(const float x[3], const float y[3], const float z[3]);
 Mat4 coal_BuildRotate(float angle, Vec3 axis);
@@ -74,7 +74,7 @@ Mat4 coal_Translate_Mat4(Vec3 t, Mat4 m);
 Mat4 coal_Transpose_Mat4(Mat4 m);
 Mat4 coal_ScaleUniform_Mat4(float s, Mat4 m);
 Mat4 coal_ScaleNonUniform_Mat4(Vec3 s, Mat4 m);
-Vec2 coal_Translate(Vec2 t, Vec2);
+Vec2 coal_Translate_Vec2(Vec2 t, Vec2);
 Vec2 coal_Scale(float scale, Vec2);
 Vec2 coal_Add(Vec2, Vec2);
 float coal_Distance(Vec2 a, Vec2 b);
@@ -88,10 +88,10 @@ float coal_Length2(Vec2);
 float coal_Determinant(Mat2);
 Vec2  coal_PolarToCart(float angle, float radius);
 Mat4  coal_Invert4x4(Mat4);
-int   coal_IntersectTriangle(Vec3 orig, const Vec3* dir, 
-        const Vec3* vert0, const Vec3* vert1, const Vec3* vert2,
+int   coal_IntersectTriangle(Vec3 orig, Vec3 dir, 
+        Vec3 vert0, Vec3 vert1, Vec3 vert2,
         float* t, float* u, float* v);
-Vec3 m_Lerp_Vec3(const Vec3* a, const Vec3* b, const float t);
+Vec3 coal_Lerp_Vec3(Vec3 a, Vec3 b, float t);
 float coal_Rand(void);
 float coal_RandRange(float min, float max);
 Vec3 coal_RandVec3(float min, float max);
