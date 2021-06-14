@@ -68,6 +68,7 @@ typedef struct Segment {
 #ifndef COAL_NO_SIMPLE_TYPES
 typedef Coal_Vec2    Vec2;
 typedef Coal_Vec3    Vec3;
+typedef Coal_Vec4    Vec4;
 typedef Coal_Mat2    Mat2;
 typedef Coal_Mat3    Mat3;
 typedef Coal_Mat4    Mat4;
@@ -75,32 +76,42 @@ typedef Coal_Ray     Ray;
 typedef Coal_Segment Segment;
 #endif
 
-Coal_Mat4 coal_Ident_Coal_Mat4(void);
+#define COAL_MAT4_IDENT (Coal_Mat4){\
+    1, 0, 0, 0, \
+    0, 1, 0, 0, \
+    0, 0, 1, 0, \
+    0, 0, 0, 1  \
+}
+
+Coal_Mat4 coal_Ident_Mat4(void);
 Coal_Mat4 coal_BuildPerspective(float nearDist, float farDist);
-Coal_Vec3 coal_GetLocalZ_Coal_Mat4(Coal_Mat4 m);
-Coal_Vec3 coal_GetTranslation_Coal_Mat4(Coal_Mat4 m);
-Coal_Vec3 coal_Add_Coal_Vec3(Coal_Vec3 a, Coal_Vec3 b);
-Coal_Vec3 coal_Sub_Coal_Vec3(Coal_Vec3 a, Coal_Vec3 b);
-Coal_Vec3 coal_Normalize_Coal_Vec3(Coal_Vec3 v);
-Coal_Vec4 coal_Normalize_Coal_Vec4(Coal_Vec4 v);
-Coal_Vec3 coal_Scale_Coal_Vec3(float s, Coal_Vec3 v);
+Coal_Vec3 coal_GetLocalX_Mat4(Coal_Mat4 m);
+Coal_Vec3 coal_GetLocalY_Mat4(Coal_Mat4 m);
+Coal_Vec3 coal_GetLocalZ_Mat4(Coal_Mat4 m);
+Coal_Vec3 coal_GetTranslation_Mat4(Coal_Mat4 m);
+Coal_Vec3 coal_Add_Vec3(Coal_Vec3 a, Coal_Vec3 b);
+Coal_Vec3 coal_Sub_Vec3(Coal_Vec3 a, Coal_Vec3 b);
+Coal_Vec3 coal_Normalize_Vec3(Coal_Vec3 v);
+Coal_Vec4 coal_Normalize_Vec4(Coal_Vec4 v);
+Coal_Vec3 coal_Scale_Vec3(float s, Coal_Vec3 v);
 Coal_Vec3 coal_Cross(Coal_Vec3 a, Coal_Vec3 b);
 Coal_Mat4 coal_LookAt(Coal_Vec3 pos, Coal_Vec3 target, Coal_Vec3 up);
-Coal_Vec2 coal_Rotate_Coal_Vec2(float angle /* radians */, Coal_Vec2);
-Coal_Mat4 coal_RotateY_Coal_Mat4(float angle, Coal_Mat4 m);
-Coal_Mat4 coal_BuildFromBasis_Coal_Mat4(const float x[3], const float y[3],
+void coal_LookAtInverse(const Mat4 m, float pivotDistance, Vec3* pos, Vec3* target, Vec3* up);
+Coal_Vec2 coal_Rotate_Vec2(float angle /* radians */, Coal_Vec2);
+Coal_Mat4 coal_RotateY_Mat4(float angle, Coal_Mat4 m);
+Coal_Mat4 coal_BuildFromBasis_Mat4(const float x[3], const float y[3],
                                         const float z[3]);
 Coal_Mat4 coal_BuildRotate(float angle, Coal_Vec3 axis);
-Coal_Vec3 coal_RotateY_Coal_Vec3(float angle, Coal_Vec3 v);
-Coal_Mat4 coal_RotateZ_Coal_Mat4(float angle, Coal_Mat4 m);
-Coal_Mat4 coal_Mult_Coal_Mat4(Coal_Mat4 a, Coal_Mat4 b);
-Coal_Vec3 coal_Mult_Coal_Mat4Coal_Vec3(Coal_Mat4 m, Coal_Vec3 v);
-Coal_Vec4 coal_Mult_Coal_Mat4Coal_Vec4(Coal_Mat4 m, Coal_Vec4 v);
-Coal_Mat4 coal_Translate_Coal_Mat4(Coal_Vec3 t, Coal_Mat4 m);
-Coal_Mat4 coal_Transpose_Coal_Mat4(Coal_Mat4 m);
-Coal_Mat4 coal_ScaleUniform_Coal_Mat4(float s, Coal_Mat4 m);
-Coal_Mat4 coal_ScaleNonUniform_Coal_Mat4(Coal_Vec3 s, Coal_Mat4 m);
-Coal_Vec2 coal_Translate_Coal_Vec2(Coal_Vec2 t, Coal_Vec2);
+Coal_Vec3 coal_RotateY_Vec3(float angle, Coal_Vec3 v);
+Coal_Mat4 coal_RotateZ_Mat4(float angle, Coal_Mat4 m);
+Coal_Mat4 coal_Mult_Mat4(Coal_Mat4 a, Coal_Mat4 b);
+Coal_Vec3 coal_Mult_Mat4Vec3(Coal_Mat4 m, Coal_Vec3 v);
+Coal_Vec4 coal_Mult_Mat4Vec4(Coal_Mat4 m, Coal_Vec4 v);
+Coal_Mat4 coal_Translate_Mat4(Coal_Vec3 t, Coal_Mat4 m);
+Coal_Mat4 coal_Transpose_Mat4(Coal_Mat4 m);
+Coal_Mat4 coal_ScaleUniform_Mat4(float s, Coal_Mat4 m);
+Coal_Mat4 coal_ScaleNonUniform_Mat4(Coal_Vec3 s, Coal_Mat4 m);
+Coal_Vec2 coal_Translate_Vec2(Coal_Vec2 t, Coal_Vec2);
 Coal_Vec2 coal_Scale(float scale, Coal_Vec2);
 Coal_Vec2 coal_Add(Coal_Vec2, Coal_Vec2);
 float     coal_Distance(Coal_Vec2 a, Coal_Vec2 b);
@@ -118,7 +129,7 @@ Coal_Mat4 coal_Invert4x4(Coal_Mat4);
 int       coal_IntersectTriangle(Coal_Vec3 orig, Coal_Vec3 dir, Coal_Vec3 vert0,
                                  Coal_Vec3 vert1, Coal_Vec3 vert2, float* t, float* u,
                                  float* v);
-Coal_Vec3 coal_Lerp_Coal_Vec3(Coal_Vec3 a, Coal_Vec3 b, float t);
+Coal_Vec3 coal_Lerp_Vec3(Coal_Vec3 a, Coal_Vec3 b, float t);
 float     coal_Rand(void);
 float     coal_RandRange(float min, float max);
 Coal_Vec3 coal_RandCoal_Vec3(float min, float max);

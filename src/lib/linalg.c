@@ -246,6 +246,15 @@ Mat4 coal_LookAt(const Vec3 pos, const Vec3 target, const Vec3 up)
     return m;
 }
 
+void coal_LookAtInverse(const Mat4 m, float pivotDistance, Vec3* pos, Vec3* target, Vec3* up)
+{
+    *pos = coal_GetTranslation_Mat4(m);
+    Vec3 z = coal_GetLocalZ_Mat4(m);
+    Vec3 dir = coal_Scale_Vec3(-pivotDistance, z);
+    *target = coal_Add_Vec3(dir, *pos);
+    *up = coal_GetLocalY_Mat4(m);
+}
+
 Mat4 coal_LookAt_old(const Vec3 pos, const Vec3 target, const Vec3 up)
 {
     Vec3 temp = coal_Sub_Vec3(target, pos);
@@ -363,6 +372,22 @@ Vec2 coal_PolarToCart(const float angle, const float radius)
 Vec3 coal_GetTranslation_Mat4(const Mat4 m)
 {
     return (Vec3){m.e[3][0], m.e[3][1], m.e[3][2]};
+}
+
+Vec3 coal_GetLocalX_Mat4(const Mat4 m)
+{
+    return (Vec3){
+        m.e[0][0]/* + m.e[3][0] */, 
+        m.e[0][1]/* + m.e[3][1] */, 
+        m.e[0][2]/* + m.e[3][2] */};
+}
+
+Vec3 coal_GetLocalY_Mat4(const Mat4 m)
+{
+    return (Vec3){
+        m.e[1][0]/* + m.e[3][0] */, 
+        m.e[1][1]/* + m.e[3][1] */, 
+        m.e[1][2]/* + m.e[3][2] */};
 }
 
 Vec3 coal_GetLocalZ_Mat4(const Mat4 m)
