@@ -2,13 +2,11 @@ author_library(coal
     EXPORT_NAME 
         Coal
     SOURCES
-        m.c
-        m_math.c
+        linalg.c
         util.c
     PUBLIC_HEADERS
         coal.h
-        m.h
-        m_math.h
+        linalg.h
         util.h
     DEPENDENCIES
         m

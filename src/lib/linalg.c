@@ -1,8 +1,8 @@
-#include "m_math.h"
+#include "linalg.h"
 #include "util.h"
+#include <math.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <stdio.h>
 
 #define CROSS(dest,v1,v2) \
     dest[0]=v1[1]*v2[2]-v1[2]*v2[1]; \
@@ -18,14 +18,15 @@
 
 _Static_assert(sizeof(Vec3) == 12, "Bad size for Vec3. Should be exactly 3 floats wide.");
 
-static void m_Mult_Mat2Vec2(const Mat2* m, Vec2* v)
+static Vec2 coal_Mult_Mat2Vec2(Mat2 m, Vec2 v)
 {
-    float x = m->x00 * v->x + m->x01 * v->y;
-    v->y = m->x10 * v->x + m->x11 * v->y;
-    v->x = x;
+    float x = m.x00 * v.x + m.x01 * v.y;
+    v.y = m.x10 * v.x + m.x11 * v.y;
+    v.x = x;
+    return v;
 }
 
-Mat4 m_Ident_Mat4(void)
+Mat4 coal_Ident_Mat4(void)
 {
     Mat4 m = {
         1, 0, 0, 0,
@@ -36,7 +37,7 @@ Mat4 m_Ident_Mat4(void)
     return m;
 };
 
-Mat4 m_BuildPerspective(const float nearDist, const float farDist)
+Mat4 coal_BuildPerspective(const float nearDist, const float farDist)
 {
     /*
      * Formula: 
@@ -68,7 +69,7 @@ Mat4 m_BuildPerspective(const float nearDist, const float farDist)
     return m;
 }
 
-void m_Rotate_Vec2(const float angle, Vec2* v)
+Vec2 coal_Rotate_Vec2(float angle, Vec2 v)
 {
     Mat2 rot = {
         .x00 =  cos(angle),
@@ -76,94 +77,94 @@ void m_Rotate_Vec2(const float angle, Vec2* v)
         .x10 =  sin(angle),
         .x11 =  cos(angle)
     };
-    m_Mult_Mat2Vec2(&rot, v);
+    return coal_Mult_Mat2Vec2(rot, v);
 }
 
-Vec3 m_RotateY_Vec3(const float angle, const Vec3 *v)
+Vec3 coal_RotateY_Vec3(float angle, Vec3 v)
 {
-    Mat4 m = m_Ident_Mat4();
-    m = m_RotateY_Mat4(angle, &m);
-    return m_Mult_Mat4Vec3(&m, v);
+    Mat4 m = coal_Ident_Mat4();
+    m = coal_RotateY_Mat4(angle, m);
+    return coal_Mult_Mat4Vec3(m, v);
 }
 
-Vec3 m_Add_Vec3(const Vec3* a, const Vec3* b)
-{
-    return (Vec3){
-        a->x[0] + b->x[0], 
-        a->x[1] + b->x[1], 
-        a->x[2] + b->x[2]};
-}
-
-Vec3 m_Sub_Vec3(const Vec3* a, const Vec3* b)
+Vec3 coal_Add_Vec3(const Vec3 a, const Vec3 b)
 {
     return (Vec3){
-        a->x[0] - b->x[0],
-        a->x[1] - b->x[1],
-        a->x[2] - b->x[2]};
+        a.e[0] + b.e[0], 
+        a.e[1] + b.e[1], 
+        a.e[2] + b.e[2]};
 }
 
-float m_Dot(const Vec3* a, const Vec3* b)
+Vec3 coal_Sub_Vec3(Vec3 a, Vec3 b)
 {
-    return a->x[0] * b->x[0] 
-         + a->x[1] * b->x[1] 
-         + a->x[2] * b->x[2];
+    return (Vec3){
+        a.x - b.x,
+        a.y - b.y,
+        a.z - b.z};
 }
 
-Vec3 m_Cross(const Vec3 *a, const Vec3 *b)
+float coal_Dot(Vec3 a, Vec3 b)
+{
+    return a.e[0] * b.e[0] 
+         + a.e[1] * b.e[1] 
+         + a.e[2] * b.e[2];
+}
+
+Vec3 coal_Cross(Vec3 a, Vec3 b)
 {
     Vec3 v;
-    v.x[0] = a->x[1] * b->x[2] - a->x[2] * b->x[1];
-    v.x[1] = a->x[2] * b->x[0] - a->x[0] * b->x[2];
-    v.x[2] = a->x[0] * b->x[1] - a->x[1] * b->x[0];
+    v.e[0] = a.e[1] * b.e[2] - a.e[2] * b.e[1];
+    v.e[1] = a.e[2] * b.e[0] - a.e[0] * b.e[2];
+    v.e[2] = a.e[0] * b.e[1] - a.e[1] * b.e[0];
     return v;
 }
 
-Vec3 m_Mult_Mat4Vec3(const Mat4* m, const Vec3* v)
+Vec3 coal_Mult_Mat4Vec3(Mat4 m, Vec3 v)
 {
     Vec3 out;
     for (int i = 0; i < 3; i++) 
     {
-        out.x[i] = 0.0;
+        out.e[i] = 0.0;
         for (int j = 0; j < 3; j++) 
         {
-            out.x[i] += m->x[j][i] * v->x[j];
+            out.e[i] += m.e[j][i] * v.e[j];
         }
     }
     return out;
 }
 
-Vec4 m_Mult_Mat4Vec4(const Mat4* m, const Vec4* v)
+Vec4 coal_Mult_Mat4Vec4(Mat4 m, Vec4 v)
 {
     Vec4 out;
     for (int i = 0; i < 4; i++) 
     {
-        out.x[i] = 0.0;
+        out.e[i] = 0.0;
         for (int j = 0; j < 4; j++) 
         {
-            out.x[i] += m->x[j][i] * v->x[j];
+            out.e[i] += m.e[j][i] * v.e[j];
         }
     }
     return out;
 }
 
-Mat4 m_Mult_Mat4(const Mat4* a, const Mat4* b)
+Mat4 coal_Mult_Mat4(Mat4 a, Mat4 b)
 {
     Mat4 out;
     for (int i = 0; i < 4; i++) 
         for (int j = 0; j < 4; j++) 
         {
-            out.x[i][j] = 0;
+            out.e[i][j] = 0;
             for (int k = 0; k < 4; k++) 
-                out.x[i][j] += a->x[i][k] * b->x[k][j];
+                out.e[i][j] += a.e[i][k] * b.e[k][j];
         }
     return out;
 }
 
-Mat4 m_BuildRotate(const float angle, const Vec3* axis)
+Mat4 coal_BuildRotate(float angle, Vec3 axis)
 {
-    const float x = axis->x[0];
-    const float y = axis->x[1];
-    const float z = axis->x[2];
+    const float x = axis.e[0];
+    const float y = axis.e[1];
+    const float z = axis.e[2];
     const float a = angle;
     const Vec3 col1 = {
         cos(a) + x*x*(1 - cos(a)),
@@ -180,10 +181,10 @@ Mat4 m_BuildRotate(const float angle, const Vec3* axis)
         y*z*(1 - cos(a)) - x*sin(a),
         cos(a) + z*z*(1 - cos(a))
     };
-    return m_BuildFromBasis_Mat4(col1.x, col2.x, col3.x);
+    return coal_BuildFromBasis_Mat4(col1.e, col2.e, col3.e);
 }
 
-Mat4 m_RotateY_Mat4(const float angle, const Mat4* m)
+Mat4 coal_RotateY_Mat4(float angle, Mat4 m)
 {
     const float c = cos(angle);
     const float s = sin(angle);
@@ -193,10 +194,10 @@ Mat4 m_RotateY_Mat4(const float angle, const Mat4* m)
         s, 0, c, 0,
         0, 0, 0, 1,
     };
-    return m_Mult_Mat4(&rot, m);
+    return coal_Mult_Mat4(rot, m);
 }
 
-Mat4 m_RotateZ_Mat4(const float angle, const Mat4* m)
+Mat4 coal_RotateZ_Mat4(float angle, Mat4 m)
 {
     const float c = cos(angle);
     const float s = sin(angle);
@@ -206,21 +207,21 @@ Mat4 m_RotateZ_Mat4(const float angle, const Mat4* m)
         0, 0, 1, 0,
         0, 0, 0, 1,
     };
-    return m_Mult_Mat4(&rot, m);
+    return coal_Mult_Mat4(rot, m);
 }
 
-Mat4 m_Translate_Mat4(const Vec3 t, const Mat4 *m)
+Mat4 coal_Translate_Mat4(const Vec3 t, const Mat4 m)
 {
     const Mat4 trans = {
         1,     0,   0, 0,
         0,     1,   0, 0,
         0,     0,   1, 0,
-        t.x[0], t.x[1], t.x[2], 1
+        t.e[0], t.e[1], t.e[2], 1
     };
-    return m_Mult_Mat4(m, &trans);
+    return coal_Mult_Mat4(m, trans);
 }
 
-Mat4 m_BuildFromBasis_Mat4(const float x[3], const float y[3], const float z[3])
+Mat4 coal_BuildFromBasis_Mat4(const float x[3], const float y[3], const float z[3])
 {
     const Mat4 m = (Mat4){
         x[0], x[1], x[2], 0,
@@ -231,102 +232,116 @@ Mat4 m_BuildFromBasis_Mat4(const float x[3], const float y[3], const float z[3])
     return m;
 }
 
-Mat4 m_LookAt(const Vec3* pos, const Vec3* target, const Vec3* up)
+Mat4 coal_LookAt(const Vec3 pos, const Vec3 target, const Vec3 up)
 {
-    Vec3 temp = m_Sub_Vec3(target, pos);
-    const Vec3 dir = m_Normalize_Vec3(&temp);
-    temp = m_Cross(&dir, up);
-    const Vec3 x = m_Normalize_Vec3(&temp);
-    temp = m_Cross(&x, &dir);
-    const Vec3 y = m_Normalize_Vec3(&temp);
-    const Vec3 z = m_Scale_Vec3(-1, &dir);
-    Mat4 m = m_BuildFromBasis_Mat4(x.x, y.x, z.x);
-    m = m_Translate_Mat4(*pos, &m);
+    Vec3 temp = coal_Sub_Vec3(target, pos);
+    const Vec3 dir = coal_Normalize_Vec3(temp);
+    temp = coal_Cross(dir, up);
+    const Vec3 x = coal_Normalize_Vec3(temp);
+    temp = coal_Cross(x, dir);
+    const Vec3 y = coal_Normalize_Vec3(temp);
+    const Vec3 z = coal_Scale_Vec3(-1, dir);
+    Mat4 m = coal_BuildFromBasis_Mat4(x.e, y.e, z.e);
+    m = coal_Translate_Mat4(pos, m);
     return m;
 }
 
-Mat4 m_LookAt_old(const Vec3* pos, const Vec3* target, const Vec3* up)
+void coal_LookAtInverse(const Mat4 m, float pivotDistance, Vec3* pos, Vec3* target, Vec3* up)
 {
-    Vec3 temp = m_Sub_Vec3(target, pos);
-    const Vec3 dir = m_Normalize_Vec3(&temp);
-    temp = m_Cross(&dir, up);
-    const Vec3 x = m_Normalize_Vec3(&temp);
-    temp = m_Cross(&x, &dir);
-    const Vec3 y = m_Normalize_Vec3(&temp);
-    const Vec3 z = m_Scale_Vec3(-1, &dir);
-    Mat4 m = m_BuildFromBasis_Mat4(x.x, y.x, z.x);
-    m = m_Transpose_Mat4(&m);
-    m = m_Translate_Mat4(m_Scale_Vec3(-1, pos), &m);
-    //m = m_Translate_Mat4(*pos, &m);
+    *pos = coal_GetTranslation_Mat4(m);
+    Vec3 z = coal_GetLocalZ_Mat4(m);
+    Vec3 dir = coal_Scale_Vec3(-pivotDistance, z);
+    *target = coal_Add_Vec3(dir, *pos);
+    *up = coal_GetLocalY_Mat4(m);
+}
+
+Mat4 coal_LookAt_old(const Vec3 pos, const Vec3 target, const Vec3 up)
+{
+    Vec3 temp = coal_Sub_Vec3(target, pos);
+    const Vec3 dir = coal_Normalize_Vec3(temp);
+    temp = coal_Cross(dir, up);
+    const Vec3 x = coal_Normalize_Vec3(temp);
+    temp = coal_Cross(x, dir);
+    const Vec3 y = coal_Normalize_Vec3(temp);
+    const Vec3 z = coal_Scale_Vec3(-1, dir);
+    Mat4 m = coal_BuildFromBasis_Mat4(x.e, y.e, z.e);
+    m = coal_Transpose_Mat4(m);
+    m = coal_Translate_Mat4(coal_Scale_Vec3(-1, pos), m);
+    //m = coal_Translate_Mat4(*pos, &m);
     return m;
 }
 
-void m_ScaleUniform_Mat4(const float s, Mat4 *m)
+Mat4 coal_ScaleUniform_Mat4(const float s, Mat4 m)
 {
     for (int i = 0; i < 3; i++) 
     {
         for (int j = 0; j < 3; j++) 
         {
-            m->x[i][j] *= s;
+            m.e[i][j] *= s;
         }
     }
+    return m;
 }
 
-void m_ScaleNonUniform_Mat4(const Vec3 s, Mat4 *m)
+Mat4 coal_ScaleNonUniform_Mat4(const Vec3 s, Mat4 m)
 {
     for (int i = 0; i < 3; i++) 
     {
-        m->x[i][i] = s.x[i];
+        m.e[i][i] = s.e[i];
     }
+    return m;
 }
 
-Mat4 m_Transpose_Mat4(const Mat4 *m)
+Mat4 coal_Transpose_Mat4(const Mat4 m)
 {
     Mat4 out;
     for (int i = 0; i < 4; i++) 
     {
         for (int j = 0; j < 4; j++) 
         {
-            out.x[i][j] = m->x[j][i];
+            out.e[i][j] = m.e[j][i];
         }  
     }
     return out;
 }
 
-void m_Translate(const Vec2 t, Vec2* v)
+Vec2 coal_Translate_Vec2(const Vec2 t, Vec2 v)
 {
-    v->x += t.x;
-    v->y += t.y;
+    v.x += t.x;
+    v.y += t.y;
+    return v;
 }
 
-void m_Scale(const float s, Vec2* v)
+Vec2 coal_Scale_Vec2(const float s, Vec2 v)
 {
-    v->x *= s;
-    v->y *= s;
+    v.x *= s;
+    v.y *= s;
+    return v;
 }
 
-float m_Distance(const Vec2 a, const Vec2 b)
+float coal_Distance(const Vec2 a, const Vec2 b)
 {
-    return m_Length(m_Subtract(a, b));
+    return coal_Length(coal_Subtract(a, b));
 }
 
-float m_Length(const Vec2 v)
+float coal_Length(const Vec2 v)
 {
-    return sqrt(m_Length2(v));
+    return sqrt(coal_Length2(v));
 }
 
-float m_Length2(const Vec2 v)
+float coal_Length2(const Vec2 v)
 {
     return v.x * v.x + v.y * v.y;
 }
 
-void m_Add(const Vec2 v1, Vec2* v2)
+Vec2 coal_Add(const Vec2 v1, Vec2 v2)
 {
-    v2->x += v1.x;
-    v2->y += v1.y;
+    v2.x += v1.x;
+    v2.y += v1.y;
+    return v2;
 }
 
-Vec2 m_Subtract(const Vec2 v1, const Vec2 v2)
+Vec2 coal_Subtract(const Vec2 v1, const Vec2 v2)
 {
     Vec2 v;
     v.x = v1.x - v2.x;
@@ -334,23 +349,18 @@ Vec2 m_Subtract(const Vec2 v1, const Vec2 v2)
     return v;
 }
 
-float m_Rand(void)
-{
-    return rand() / (float)RAND_MAX;
-}
-
-float m_RandNeg(void)
+float coal_RandNeg(void)
 {
     float r = rand() / (float)RAND_MAX;
     return r * 2 - 1;
 }
 
-float m_Det2x2(const Mat2 m)
+float coal_Det2x2(const Mat2 m)
 {
     return m.x00 * m.x11 - m.x10 * m.x01;
 }
 
-Vec2 m_PolarToCart(const float angle, const float radius)
+Vec2 coal_PolarToCart(const float angle, const float radius)
 {
     Vec2 v = {
         cos(angle) * radius,
@@ -359,51 +369,67 @@ Vec2 m_PolarToCart(const float angle, const float radius)
     return v;
 }
 
-Vec3 m_GetTranslation_Mat4(const Mat4* m)
+Vec3 coal_GetTranslation_Mat4(const Mat4 m)
 {
-    return (Vec3){m->x[3][0], m->x[3][1], m->x[3][2]};
+    return (Vec3){m.e[3][0], m.e[3][1], m.e[3][2]};
 }
 
-Vec3 m_GetLocalZ_Mat4(const Mat4 *m)
+Vec3 coal_GetLocalX_Mat4(const Mat4 m)
 {
     return (Vec3){
-        m->x[2][0]/* + m->x[3][0] */, 
-        m->x[2][1]/* + m->x[3][1] */, 
-        m->x[2][2]/* + m->x[3][2] */};
+        m.e[0][0]/* + m.e[3][0] */, 
+        m.e[0][1]/* + m.e[3][1] */, 
+        m.e[0][2]/* + m.e[3][2] */};
 }
 
-float m_Length_Vec3(const Vec3* v)
+Vec3 coal_GetLocalY_Mat4(const Mat4 m)
 {
-    return sqrt(v->x[0] * v->x[0] + v->x[1] * v->x[1] + v->x[2] * v->x[2]);
+    return (Vec3){
+        m.e[1][0]/* + m.e[3][0] */, 
+        m.e[1][1]/* + m.e[3][1] */, 
+        m.e[1][2]/* + m.e[3][2] */};
 }
 
-float m_Length_Vec4(const Vec4* v)
+Vec3 coal_GetLocalZ_Mat4(const Mat4 m)
 {
-    return sqrt(v->x[0] * v->x[0] + v->x[1] * v->x[1] + v->x[2] * v->x[2] + v->x[3] * v->x[3]);
+    return (Vec3){
+        m.e[2][0]/* + m.e[3][0] */, 
+        m.e[2][1]/* + m.e[3][1] */, 
+        m.e[2][2]/* + m.e[3][2] */};
 }
 
-Vec3 m_Scale_Vec3(const float s, const Vec3* v)
+float coal_Length_Vec3(const Vec3 v)
 {
-    return (Vec3){v->x[0] * s, v->x[1] * s, v->x[2] * s};
+    return sqrt(v.e[0] * v.e[0] + v.e[1] * v.e[1] + v.e[2] * v.e[2]);
 }
 
-Vec3 m_Normalize_Vec3(const Vec3* v)
+float coal_Length_Vec4(const Vec4 v)
 {
-    const float m = m_Length_Vec3(v);
+    return sqrt(v.e[0] * v.e[0] + v.e[1] * v.e[1] + v.e[2] * v.e[2] + v.e[3] * v.e[3]);
+}
+
+Vec3 coal_Scale_Vec3(const float s, const Vec3 v)
+{
+    return (Vec3){v.e[0] * s, v.e[1] * s, v.e[2] * s};
+}
+
+Vec3 coal_Normalize_Vec3(const Vec3 v)
+{
+    const float m = coal_Length_Vec3(v);
     assert(m != 0.0);
-    return (Vec3){v->x[0] / m, v->x[1] / m, v->x[2] / m};
+    return (Vec3){v.e[0] / m, v.e[1] / m, v.e[2] / m};
 }
 
-Vec4 m_Normalize_Vec4(const Vec4* v)
+Vec4 coal_Normalize_Vec4(const Vec4 v)
 {
-    const float m = m_Length_Vec4(v);
+    const float m = coal_Length_Vec4(v);
     assert(m != 0.0);
-    return (Vec4){v->x[0] / m, v->x[1] / m, v->x[2] / m, v->x[3] / m};
+    return (Vec4){v.e[0] / m, v.e[1] / m, v.e[2] / m, v.e[3] / m};
 }
 
-Mat4 m_Invert4x4(const Mat4* const mat)
+Mat4 coal_Invert4x4(const Mat4 mat)
 {
-    const float* const m = (float*)mat->x;
+    const float* const m = (float*)mat.e;
     float inv[16];
 
     inv[0] = m[5]  * m[10] * m[15] - 
@@ -525,7 +551,7 @@ Mat4 m_Invert4x4(const Mat4* const mat)
     det = 1.0 / det;
 
     Mat4 out;
-    float* const outx = (float*)out.x;
+    float* const outx = (float*)out.e;
     for (int i = 0; i < 16; i++) 
     {
         outx[i] = inv[i] * det;
@@ -566,25 +592,25 @@ Vec3 coal_RandVec3(float min, float max)
 #define EPSILON 0.000001
 // Moller & Trumbore triangle intersection algorithm
 // this culls all triangles facing away
-int m_IntersectTriangle(const Vec3* orig, const Vec3* dir, 
-        const Vec3* vert0, const Vec3* vert1, const Vec3* vert2,
+int coal_IntersectTriangle2(const Vec3 orig, const Vec3 dir, 
+        const Vec3 vert0, const Vec3 vert1, const Vec3 vert2,
         float* t, float* u, float* v)
 {
-    const Vec3 edge1 = m_Sub_Vec3(vert1, vert0);
-    const Vec3 edge2 = m_Sub_Vec3(vert2, vert0);
-    const Vec3 pvec  = m_Cross(dir, &edge2);
-    const float det  = m_Dot(&edge1, &pvec);
+    const Vec3 edge1 = coal_Sub_Vec3(vert1, vert0);
+    const Vec3 edge2 = coal_Sub_Vec3(vert2, vert0);
+    const Vec3 pvec  = coal_Cross(dir, edge2);
+    const float det  = coal_Dot(edge1, pvec);
     if (det < EPSILON) 
         return 0;
-    const Vec3 tvec  = m_Sub_Vec3(orig, vert0);
-    *u = m_Dot(&tvec, &pvec);
+    const Vec3 tvec  = coal_Sub_Vec3(orig, vert0);
+    *u = coal_Dot(tvec, pvec);
     if (*u < 0.0 || *u > det) // may have branch detection issues
         return 0; 
-    const Vec3 qvec  = m_Cross(&tvec, &edge1);
-    *v = m_Dot(dir, &qvec);
+    const Vec3 qvec  = coal_Cross(tvec, edge1);
+    *v = coal_Dot(dir, qvec);
     if (*v < 0.0 || *u + *v > det) 
         return 0;
-    *t = m_Dot(&edge2, &qvec);
+    *t = coal_Dot(edge2, qvec);
     const float inv_det = 1.0 / det;
     *t *= inv_det;
     *u *= inv_det;
@@ -592,12 +618,12 @@ int m_IntersectTriangle(const Vec3* orig, const Vec3* dir,
     return 1;
 }
 
-Vec3 m_Lerp_Vec3(const Vec3* a, const Vec3* b, const float t)
+Vec3 coal_Lerp_Vec3(const Vec3 a, const Vec3 b, const float t)
 {
     assert(t >= 0.0 && t <= 1.0);
     Vec3 v;
-    v.x[0] = a->x[0] * (1.0 - t) + b->x[0] * t;
-    v.x[1] = a->x[1] * (1.0 - t) + b->x[1] * t;
-    v.x[2] = a->x[2] * (1.0 - t) + b->x[2] * t;
+    v.e[0] = a.e[0] * (1.0 - t) + b.e[0] * t;
+    v.e[1] = a.e[1] * (1.0 - t) + b.e[1] * t;
+    v.e[2] = a.e[2] * (1.0 - t) + b.e[2] * t;
     return v;
 }

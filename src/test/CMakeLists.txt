@@ -1,3 +1,3 @@
-add_executable(vecAdd vecAdd.c)
-target_link_libraries(vecAdd Coal::Coal)
-add_test(vector_addition vecAdd)
+include(author_tests)
+author_tests(Coal::Coal
+    SOURCES vecAdd.c dot.c cross.c)
