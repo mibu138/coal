@@ -8,6 +8,17 @@ author_library(coal
         coal.h
         linalg.h
         util.h
-    DEPENDENCIES
+    DEPS
+        m
+        )
+
+author_library(coalObj
+    TYPE OBJECT
+    EXPORT_NAME 
+        CoalObj
+    SOURCES
+        linalg.c
+        util.c
+    DEPS
         m
         )
