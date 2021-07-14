@@ -1,9 +1,14 @@
 cmake_minimum_required(VERSION 3.17)
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/cmake-common)
-
 project(Coal VERSION 0.2.0)
 
+include(FetchContent)
+FetchContent_Declare(
+    cmake-common
+    GIT_REPOSITORY https://github.com/mokchira/cmake-common
+    GIT_TAG origin/master)
+FetchContent_Populate(cmake-common)
+list(APPEND CMAKE_MODULE_PATH ${cmake-common_SOURCE_DIR})
 include(header)
 include(author_library)
 
