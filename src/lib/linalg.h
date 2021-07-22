@@ -36,6 +36,12 @@ typedef union Coal_Vec4 {
         float w;
     };
     struct {
+        float r;
+        float g;
+        float b;
+        float a;
+    };
+    struct {
         float offsetx;
         float offsety;
         float width;
