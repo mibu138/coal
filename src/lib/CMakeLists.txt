@@ -1,3 +1,4 @@
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(srcs linalg.c util.c)
 add_library(coalObj    OBJECT)
 add_library(coal       SHARED)
