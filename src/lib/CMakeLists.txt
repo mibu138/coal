@@ -1,24 +1,11 @@
-author_library(coal 
-    EXPORT_NAME 
-        Coal
-    SOURCES
-        linalg.c
-        util.c
-    PUBLIC_HEADERS
-        coal.h
-        linalg.h
-        util.h
-    DEPS
-        m
-        )
-
-author_library(coalObj
-    TYPE OBJECT
-    EXPORT_NAME 
-        CoalObj
-    SOURCES
-        linalg.c
-        util.c
-    DEPS
-        m
-        )
+set(srcs linalg.c util.c)
+add_library(coalObj    OBJECT)
+add_library(coal       SHARED)
+target_sources(coalObj PRIVATE ${srcs})
+target_include_directories(coalObj 
+    PRIVATE ../include/coal
+    INTERFACE ../include)
+target_link_libraries(coalObj INTERFACE m)
+target_link_libraries(coal PUBLIC Coal::CoalObj)
+add_library(Coal::Coal    ALIAS coal)
+add_library(Coal::CoalObj ALIAS coalObj)

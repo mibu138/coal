@@ -1,3 +1,9 @@
-include(author_tests)
-author_tests(Coal::Coal
-    SOURCES vecAdd.c dot.c cross.c)
+add_executable(cross)
+add_executable(dot)
+add_executable(vecAdd)
+target_sources(cross PRIVATE cross.c)
+target_sources(dot PRIVATE dot.c)
+target_sources(vecAdd PRIVATE vecAdd.c)
+target_link_libraries(cross PRIVATE Coal::CoalObj)
+target_link_libraries(dot PRIVATE Coal::CoalObj)
+target_link_libraries(vecAdd PRIVATE Coal::CoalObj)
