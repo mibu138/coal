@@ -118,7 +118,7 @@ Coal_Mat4 coal_Transpose_Mat4(Coal_Mat4 m);
 Coal_Mat4 coal_ScaleUniform_Mat4(float s, Coal_Mat4 m);
 Coal_Mat4 coal_ScaleNonUniform_Mat4(Coal_Vec3 s, Coal_Mat4 m);
 Coal_Vec2 coal_Translate_Vec2(Coal_Vec2 t, Coal_Vec2);
-Coal_Vec2 coal_Scale(float scale, Coal_Vec2);
+Coal_Vec2 coal_Scale_Vec2(float scale, Coal_Vec2);
 Coal_Vec2 coal_Add(Coal_Vec2, Coal_Vec2);
 float     coal_Distance(Coal_Vec2 a, Coal_Vec2 b);
 float     coal_Dot(Coal_Vec3 a, Coal_Vec3 b);
