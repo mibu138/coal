@@ -6,7 +6,12 @@ target_sources(coalObj PRIVATE ${srcs})
 target_include_directories(coalObj 
     PRIVATE ../include/coal
     INTERFACE ../include)
-target_link_libraries(coalObj INTERFACE m)
+if (NOT WIN32)
+	target_link_libraries(coalObj INTERFACE m)
+else() 
+	target_link_libraries(coalObj INTERFACE)
+	set_target_properties(coal PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+endif()
 target_link_libraries(coal PUBLIC coalObj)
 add_library(Coal::CoalObj ALIAS coalObj)
 add_library(Coal::Coal    ALIAS coal)

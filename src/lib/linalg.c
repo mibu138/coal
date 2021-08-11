@@ -16,7 +16,9 @@
     dest[1]=v1[1]-v2[1]; \
     dest[2]=v1[2]-v2[2];
 
+#ifndef WIN32
 _Static_assert(sizeof(Vec3) == 12, "Bad size for Vec3. Should be exactly 3 floats wide.");
+#endif
 
 static Vec2 coal_Mult_Mat2Vec2(Mat2 m, Vec2 v)
 {
