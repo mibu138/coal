@@ -2,6 +2,13 @@ cmake_minimum_required(VERSION 3.17)
 
 project(Coal VERSION 0.2.0)
 
+option(COAL_SKIP_TESTS "Skip building tests." OFF)
+option(COAL_ENABLE_TESTING "Enables Ctest." ON)
+
+if(COAL_ENABLE_TESTING)
+    enable_testing()
+endif()
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(WIN32)
