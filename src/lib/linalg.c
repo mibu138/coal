@@ -323,15 +323,15 @@ Vec2 coal_Scale_Vec2(const float s, Vec2 v)
 
 float coal_Distance(const Vec2 a, const Vec2 b)
 {
-    return coal_Length(coal_Subtract(a, b));
+    return coal_Length_Vec2(coal_Subtract(a, b));
 }
 
-float coal_Length(const Vec2 v)
+float coal_Length_Vec2(const Vec2 v)
 {
-    return sqrt(coal_Length2(v));
+    return sqrt(coal_Length2_Vec2(v));
 }
 
-float coal_Length2(const Vec2 v)
+float coal_Length2_Vec2(const Vec2 v)
 {
     return v.x * v.x + v.y * v.y;
 }
@@ -351,13 +351,18 @@ Vec2 coal_Subtract(const Vec2 v1, const Vec2 v2)
     return v;
 }
 
+Vec2 coal_Sub_Vec2(const Vec2 v1, const Vec2 v2)
+{
+    return coal_Subtract(v1, v2);
+}
+
 float coal_RandNeg(void)
 {
     float r = rand() / (float)RAND_MAX;
     return r * 2 - 1;
 }
 
-float coal_Det2x2(const Mat2 m)
+float coal_Determinant_Mat2(const Mat2 m)
 {
     return m.x00 * m.x11 - m.x10 * m.x01;
 }
@@ -589,35 +594,6 @@ Vec3 coal_RandVec3(float min, float max)
     y = y * width + min; 
     z = z * width + min; 
     return (Vec3){x, y, z};
-}
-
-#define EPSILON 0.000001
-// Moller & Trumbore triangle intersection algorithm
-// this culls all triangles facing away
-int coal_IntersectTriangle2(const Vec3 orig, const Vec3 dir, 
-        const Vec3 vert0, const Vec3 vert1, const Vec3 vert2,
-        float* t, float* u, float* v)
-{
-    const Vec3 edge1 = coal_Sub_Vec3(vert1, vert0);
-    const Vec3 edge2 = coal_Sub_Vec3(vert2, vert0);
-    const Vec3 pvec  = coal_Cross(dir, edge2);
-    const float det  = coal_Dot(edge1, pvec);
-    if (det < EPSILON) 
-        return 0;
-    const Vec3 tvec  = coal_Sub_Vec3(orig, vert0);
-    *u = coal_Dot(tvec, pvec);
-    if (*u < 0.0 || *u > det) // may have branch detection issues
-        return 0; 
-    const Vec3 qvec  = coal_Cross(tvec, edge1);
-    *v = coal_Dot(dir, qvec);
-    if (*v < 0.0 || *u + *v > det) 
-        return 0;
-    *t = coal_Dot(edge2, qvec);
-    const float inv_det = 1.0 / det;
-    *t *= inv_det;
-    *u *= inv_det;
-    *v *= inv_det;
-    return 1;
 }
 
 Vec3 coal_Lerp_Vec3(const Vec3 a, const Vec3 b, const float t)
