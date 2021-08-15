@@ -24,7 +24,7 @@ Coal_Vec4 coal_Normalize_Vec4(Coal_Vec4 v);
 Coal_Vec3 coal_Scale_Vec3(float s, Coal_Vec3 v);
 Coal_Vec3 coal_Cross(Coal_Vec3 a, Coal_Vec3 b);
 Coal_Mat4 coal_LookAt(Coal_Vec3 pos, Coal_Vec3 target, Coal_Vec3 up);
-void coal_LookAtInverse(const Mat4 m, float pivotDistance, Vec3* pos, Vec3* target, Vec3* up);
+void coal_LookAtInverse(const Coal_Mat4 m, float pivotDistance, Coal_Vec3* pos, Coal_Vec3* target, Coal_Vec3* up);
 Coal_Vec2 coal_Rotate_Vec2(float angle /* radians */, Coal_Vec2);
 Coal_Mat4 coal_RotateY_Mat4(float angle, Coal_Mat4 m);
 Coal_Mat4 coal_BuildFromBasis_Mat4(const float x[3], const float y[3],

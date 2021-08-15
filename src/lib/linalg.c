@@ -1,3 +1,4 @@
+#define COAL_SIMPLE_TYPE_NAMES
 #include "linalg.h"
 #include "util.h"
 #include <math.h>
