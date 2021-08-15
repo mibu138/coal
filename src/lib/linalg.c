@@ -339,11 +339,16 @@ float coal_Length2_Vec2(const Vec2 v)
     return v.x * v.x + v.y * v.y;
 }
 
-Vec2 coal_Add(const Vec2 v1, Vec2 v2)
+Vec2 coal_Add(Vec2 v1, Vec2 v2)
 {
     v2.x += v1.x;
     v2.y += v1.y;
     return v2;
+}
+
+Vec2 coal_Add_Vec2(const Vec2 v1, Vec2 v2)
+{
+    return coal_Add(v1, v2);
 }
 
 Vec2 coal_Subtract(const Vec2 v1, const Vec2 v2)
