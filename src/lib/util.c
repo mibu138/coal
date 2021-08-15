@@ -1,4 +1,6 @@
+#ifndef COAL_SIMPLE_TYPE_NAMES
 #define COAL_SIMPLE_TYPE_NAMES
+#endif
 #include "util.h"
 #include <stdio.h>
 
