@@ -15,3 +15,8 @@ endif()
 target_link_libraries(coal PUBLIC coalObj)
 add_library(Coal::CoalObj ALIAS coalObj)
 add_library(Coal::Coal    ALIAS coal)
+
+if(COAL_SIMPLE_TYPE_NAMES)
+    target_compile_definitions(coal PUBLIC "COAL_SIMPLE_TYPE_NAMES")
+    target_compile_definitions(coalObj PUBLIC "COAL_SIMPLE_TYPE_NAMES")
+endif()

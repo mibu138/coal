@@ -10,10 +10,6 @@ if(COAL_ENABLE_TESTING)
     enable_testing()
 endif()
 
-if(COAL_SIMPLE_TYPE_NAMES)
-    add_compile_definitions("COAL_SIMPLE_TYPE_NAMES")
-endif()
-
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(WIN32)
