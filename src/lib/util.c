@@ -30,3 +30,8 @@ void coal_PrintMat4(const Mat4 m)
         printf("\n");
     }
 }
+
+void coal_SprintVec2(char* s, const Vec2 v)
+{
+    sprintf(s, "x: %f, y: %f", v.x, v.y);
+}
