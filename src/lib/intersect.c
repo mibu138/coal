@@ -94,13 +94,3 @@ int coal_TriangleIntersect(const Vec3 orig, const Vec3 dir,
     *v *= inv_det;
     return 1;
 }
-
-bool coal_AABBIntersect(float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2)
-{
-    return !( x2 - x1 > w1 || x2 - x1 + w2 < 0 ) && !( y2 - y1 > h1 || y2 - y1 + h2 < 0 );
-}
-
-bool coal_PointInBox(float x, float y, float bx, float by, float bw, float bh)
-{
-    return !( bx - x > 0 || bx - x + bw < 0 ) && !( by - y > 0 || by - y + bh < 0 );
-}
