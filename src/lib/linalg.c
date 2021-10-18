@@ -592,7 +592,7 @@ float coal_RandRange(float min, float max)
     return x;
 }
 
-Vec3 coal_RandVec3(float min, float max)
+Vec3 coal_Rand_Vec3(float min, float max)
 {
     const float width = max - min;
     float x = (float)rand() / (float)RAND_MAX;
