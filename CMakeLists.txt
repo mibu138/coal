@@ -5,6 +5,7 @@ project(Coal VERSION 0.2.0)
 option(COAL_SKIP_TESTS "Skip building tests." OFF)
 option(COAL_ENABLE_TESTING "Enables Ctest." ON)
 option(COAL_SIMPLE_TYPE_NAMES "Enables simple type names." OFF)
+option(COAL_SIMPLE_FUNC_NAMES "Enables simple function names." OFF)
 option(COAL_64_BIT_REAL "Uses doubles for value types instead of floats." OFF)
 
 if(COAL_ENABLE_TESTING)

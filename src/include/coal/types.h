@@ -23,15 +23,33 @@ typedef union Coal_Vec2 {
     {
         return {this->x + v.x, this->y + v.y};
     }
+
+    Coal_Vec2&
+    operator+=(const Coal_Vec2& v)
+    {
+        x += v.x;
+        y += v.y;
+        return *this;
+    }
+
+    Coal_Vec2&
+    operator-=(const Coal_Vec2& v)
+    {
+        x -= v.x;
+        y -= v.y;
+        return *this;
+    }
+
     Coal_Vec2
     operator-(const Coal_Vec2& v)
     {
         return {this->x - v.x, this->y - v.y};
     }
+
     Coal_Vec2
-    operator*(const Coal_Vec2& v)
+    operator*(const real s)
     {
-        return {this->x - v.x, this->y - v.y};
+        return {this->x * s, this->y * s};
     }
 #endif
 } Coal_Vec2;
