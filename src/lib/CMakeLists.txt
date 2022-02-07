@@ -1,22 +1,21 @@
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(srcs linalg.c util.c intersect.c)
-add_library(coalObj    OBJECT)
-add_library(coal       SHARED)
-target_sources(coalObj PRIVATE ${srcs})
-target_include_directories(coalObj 
+add_library(coal)
+target_sources(coal PRIVATE ${srcs})
+target_include_directories(coal
     PRIVATE ../include/coal
     INTERFACE ../include)
 if (NOT WIN32)
-	target_link_libraries(coalObj INTERFACE m)
-else() 
-	target_link_libraries(coalObj INTERFACE)
+	target_link_libraries(coal PUBLIC m)
+else()
 	set_target_properties(coal PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 endif()
-target_link_libraries(coal PUBLIC coalObj)
-add_library(Coal::CoalObj ALIAS coalObj)
 add_library(Coal::Coal    ALIAS coal)
 
 if(COAL_SIMPLE_TYPE_NAMES)
     target_compile_definitions(coal PUBLIC "COAL_SIMPLE_TYPE_NAMES")
-    target_compile_definitions(coalObj PUBLIC "COAL_SIMPLE_TYPE_NAMES")
+endif()
+
+if(COAL_64_BIT_REAL)
+    target_compile_definitions(coal PUBLIC "COAL_64_BIT_REAL")
 endif()

@@ -3,16 +3,12 @@
 
 #include "types.h"
 
-#define COAL_MAT4_IDENT (Coal_Mat4){\
-    1, 0, 0, 0, \
-    0, 1, 0, 0, \
-    0, 0, 1, 0, \
-    0, 0, 0, 1  \
-}
+#define COAL_MAT4_IDENT                                                        \
+    (Coal_Mat4) { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }
 
 // START FUNCDECLS
 Coal_Mat4 coal_Ident_Mat4(void);
-Coal_Mat4 coal_BuildPerspective(float nearDist, float farDist);
+Coal_Mat4 coal_BuildPerspective(real nearDist, real farDist);
 Coal_Vec3 coal_GetLocalX_Mat4(Coal_Mat4 m);
 Coal_Vec3 coal_GetLocalY_Mat4(Coal_Mat4 m);
 Coal_Vec3 coal_GetLocalZ_Mat4(Coal_Mat4 m);
@@ -21,45 +17,46 @@ Coal_Vec3 coal_Add_Vec3(Coal_Vec3 a, Coal_Vec3 b);
 Coal_Vec3 coal_Sub_Vec3(Coal_Vec3 a, Coal_Vec3 b);
 Coal_Vec3 coal_Normalize_Vec3(Coal_Vec3 v);
 Coal_Vec4 coal_Normalize_Vec4(Coal_Vec4 v);
-Coal_Vec3 coal_Scale_Vec3(float s, Coal_Vec3 v);
+Coal_Vec3 coal_Scale_Vec3(real s, Coal_Vec3 v);
 Coal_Vec3 coal_Cross(Coal_Vec3 a, Coal_Vec3 b);
 Coal_Mat4 coal_LookAt(Coal_Vec3 pos, Coal_Vec3 target, Coal_Vec3 up);
-void coal_LookAtInverse(const Coal_Mat4 m, float pivotDistance, Coal_Vec3* pos, Coal_Vec3* target, Coal_Vec3* up);
-Coal_Vec2 coal_Rotate_Vec2(float angle /* radians */, Coal_Vec2);
-Coal_Mat4 coal_RotateY_Mat4(float angle, Coal_Mat4 m);
-Coal_Mat4 coal_BuildFromBasis_Mat4(const float x[3], const float y[3],
-                                        const float z[3]);
-Coal_Mat4 coal_BuildRotate(float angle, Coal_Vec3 axis);
-Coal_Vec3 coal_RotateY_Vec3(float angle, Coal_Vec3 v);
-Coal_Mat4 coal_RotateZ_Mat4(float angle, Coal_Mat4 m);
+void coal_LookAtInverse(const Coal_Mat4 m, real pivotDistance, Coal_Vec3* pos,
+                        Coal_Vec3* target, Coal_Vec3* up);
+Coal_Vec2 coal_Rotate_Vec2(real angle /* radians */, Coal_Vec2);
+Coal_Mat4 coal_RotateY_Mat4(real angle, Coal_Mat4 m);
+Coal_Mat4 coal_BuildFromBasis_Mat4(const real x[3], const real y[3],
+                                   const real z[3]);
+Coal_Mat4 coal_BuildRotate(real angle, Coal_Vec3 axis);
+Coal_Vec3 coal_RotateY_Vec3(real angle, Coal_Vec3 v);
+Coal_Mat4 coal_RotateZ_Mat4(real angle, Coal_Mat4 m);
 Coal_Mat4 coal_Mult_Mat4(Coal_Mat4 a, Coal_Mat4 b);
 Coal_Vec3 coal_Mult_Mat4Vec3(Coal_Mat4 m, Coal_Vec3 v);
 Coal_Vec4 coal_Mult_Mat4Vec4(Coal_Mat4 m, Coal_Vec4 v);
 Coal_Mat4 coal_Translate_Mat4(Coal_Vec3 t, Coal_Mat4 m);
 Coal_Mat4 coal_Transpose_Mat4(Coal_Mat4 m);
-Coal_Mat4 coal_ScaleUniform_Mat4(float s, Coal_Mat4 m);
+Coal_Mat4 coal_ScaleUniform_Mat4(real s, Coal_Mat4 m);
 Coal_Mat4 coal_ScaleNonUniform_Mat4(Coal_Vec3 s, Coal_Mat4 m);
 Coal_Vec2 coal_Translate_Vec2(Coal_Vec2 t, Coal_Vec2);
-Coal_Vec2 coal_Scale_Vec2(float scale, Coal_Vec2);
+Coal_Vec2 coal_Scale_Vec2(real scale, Coal_Vec2);
 Coal_Vec2 coal_Add(Coal_Vec2, Coal_Vec2);
-Coal_Vec2 coal_Add_Vec2(Coal_Vec2, Coal_Vec2); //calls coal_Add
-float     coal_Distance(Coal_Vec2 a, Coal_Vec2 b);
-float     coal_Dot(Coal_Vec3 a, Coal_Vec3 b);
-Coal_Vec2 coal_Subtract(Coal_Vec2, Coal_Vec2); 
-Coal_Vec2 coal_Sub_Vec2(Coal_Vec2, Coal_Vec2); //calls coal_Subtract
-// returns a random float between 0 and 1
-float     coal_Rand(void);
-// returns a random float between -1 and 1
-float     coal_RandNeg(void);
-float     coal_Length_Vec2(Coal_Vec2);
-float     coal_Length2_Vec2(Coal_Vec2);
-float     coal_Determinant_Mat2(Coal_Mat2);
-Coal_Vec2 coal_PolarToCart(float angle, float radius);
+Coal_Vec2 coal_Add_Vec2(Coal_Vec2, Coal_Vec2); // calls coal_Add
+real      coal_Distance(Coal_Vec2 a, Coal_Vec2 b);
+real      coal_Dot(Coal_Vec3 a, Coal_Vec3 b);
+Coal_Vec2 coal_Subtract(Coal_Vec2, Coal_Vec2);
+Coal_Vec2 coal_Sub_Vec2(Coal_Vec2, Coal_Vec2); // calls coal_Subtract
+// returns a random real between 0 and 1
+real      coal_Rand(void);
+// returns a random real between -1 and 1
+real      coal_RandNeg(void);
+real      coal_Length_Vec2(Coal_Vec2);
+real      coal_Length2_Vec2(Coal_Vec2);
+real      coal_Determinant_Mat2(Coal_Mat2);
+Coal_Vec2 coal_PolarToCart(real angle, real radius);
 Coal_Mat4 coal_Invert4x4(Coal_Mat4);
-Coal_Vec3 coal_Lerp_Vec3(Coal_Vec3 a, Coal_Vec3 b, float t);
-float     coal_Rand(void);
-float     coal_RandRange(float min, float max);
-Coal_Vec3 coal_Rand_Vec3(float min, float max);
+Coal_Vec3 coal_Lerp_Vec3(Coal_Vec3 a, Coal_Vec3 b, real t);
+real      coal_Rand(void);
+real      coal_RandRange(real min, real max);
+Coal_Vec3 coal_Rand_Vec3(real min, real max);
 // END FUNCDECLS
 
 #ifdef COAL_SIMPLE_FUNC_NAMES

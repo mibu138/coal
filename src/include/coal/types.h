@@ -1,64 +1,87 @@
 #ifndef COAL_TYPES_H
 #define COAL_TYPES_H
 
+#ifdef COAL_64_BIT_REAL
+typedef double real;
+#else
+typedef float real;
+#endif
+
 typedef union Coal_Vec2 {
-    float e[2];
+    real e[2];
     struct {
-        float x;
-        float y;
+        real x;
+        real y;
     };
     struct {
-        float width;
-        float height;
+        real width;
+        real height;
     };
+#ifdef __cplusplus
+    Coal_Vec2
+    operator+(const Coal_Vec2& v)
+    {
+        return {this->x + v.x, this->y + v.y};
+    }
+    Coal_Vec2
+    operator-(const Coal_Vec2& v)
+    {
+        return {this->x - v.x, this->y - v.y};
+    }
+    Coal_Vec2
+    operator*(const Coal_Vec2& v)
+    {
+        return {this->x - v.x, this->y - v.y};
+    }
+#endif
 } Coal_Vec2;
 
 typedef union Coal_Vec3 {
-    float e[3];
+    real e[3];
     struct {
-        float x;
-        float y;
-        float z;
+        real x;
+        real y;
+        real z;
     };
     struct {
-        float r;
-        float g;
-        float b;
+        real r;
+        real g;
+        real b;
     };
 } Coal_Vec3;
 
 typedef union Coal_Vec4 {
-    float e[4];
+    real e[4];
     struct {
-        float x;
-        float y;
-        float z;
-        float w;
+        real x;
+        real y;
+        real z;
+        real w;
     };
     struct {
-        float r;
-        float g;
-        float b;
-        float a;
+        real r;
+        real g;
+        real b;
+        real a;
     };
     struct {
-        float offsetx;
-        float offsety;
-        float width;
-        float height;
+        real offsetx;
+        real offsety;
+        real width;
+        real height;
     };
 } Coal_Vec4;
 
 typedef struct Coal_Mat2 {
-    float x00, x01, x10, x11;
+    real x00, x01, x10, x11;
 } Coal_Mat2;
 
 typedef struct Coal_Mat3 {
-    float e[3][3];
+    real e[3][3];
 } Coal_Mat3;
 
 typedef struct Coal_Mat4 {
-    float e[4][4];
+    real e[4][4];
 } Coal_Mat4;
 
 typedef struct Coal_Ray {

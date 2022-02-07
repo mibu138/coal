@@ -20,12 +20,12 @@
     dest[2]=v1[2]-v2[2];
 
 #ifndef WIN32
-_Static_assert(sizeof(Vec3) == 12, "Bad size for Vec3. Should be exactly 3 floats wide.");
+_Static_assert(sizeof(Vec3) == 12, "Bad size for Vec3. Should be exactly 3 reals wide.");
 #endif
 
 static Vec2 coal_Mult_Mat2Vec2(Mat2 m, Vec2 v)
 {
-    float x = m.x00 * v.x + m.x01 * v.y;
+    real x = m.x00 * v.x + m.x01 * v.y;
     v.y = m.x10 * v.x + m.x11 * v.y;
     v.x = x;
     return v;
@@ -42,10 +42,10 @@ Mat4 coal_Ident_Mat4(void)
     return m;
 };
 
-Mat4 coal_BuildPerspective(const float nearDist, const float farDist)
+Mat4 coal_BuildPerspective(const real nearDist, const real farDist)
 {
     /*
-     * Formula: 
+     * Formula:
      * 1   0   0   0
      * 0   1   0   0
      * 0   0   A  -1
@@ -61,10 +61,10 @@ Mat4 coal_BuildPerspective(const float nearDist, const float farDist)
      * TODO: derive this for yourself.
      */
     assert(nearDist > 0.00001);
-    const float f = farDist;
-    const float n = nearDist;
-    const float A = f / (n - f);
-    const float B = f * n / (n - f);
+    const real f = farDist;
+    const real n = nearDist;
+    const real A = f / (n - f);
+    const real B = f * n / (n - f);
     Mat4 m = {
         1,   0,  0,  0,
         0,  -1,  0,  0,
@@ -74,7 +74,7 @@ Mat4 coal_BuildPerspective(const float nearDist, const float farDist)
     return m;
 }
 
-Vec2 coal_Rotate_Vec2(float angle, Vec2 v)
+Vec2 coal_Rotate_Vec2(real angle, Vec2 v)
 {
     Mat2 rot = {
         .x00 =  cos(angle),
@@ -85,7 +85,7 @@ Vec2 coal_Rotate_Vec2(float angle, Vec2 v)
     return coal_Mult_Mat2Vec2(rot, v);
 }
 
-Vec3 coal_RotateY_Vec3(float angle, Vec3 v)
+Vec3 coal_RotateY_Vec3(real angle, Vec3 v)
 {
     Mat4 m = coal_Ident_Mat4();
     m = coal_RotateY_Mat4(angle, m);
@@ -95,8 +95,8 @@ Vec3 coal_RotateY_Vec3(float angle, Vec3 v)
 Vec3 coal_Add_Vec3(const Vec3 a, const Vec3 b)
 {
     return (Vec3){
-        a.e[0] + b.e[0], 
-        a.e[1] + b.e[1], 
+        a.e[0] + b.e[0],
+        a.e[1] + b.e[1],
         a.e[2] + b.e[2]};
 }
 
@@ -108,10 +108,10 @@ Vec3 coal_Sub_Vec3(Vec3 a, Vec3 b)
         a.z - b.z};
 }
 
-float coal_Dot(Vec3 a, Vec3 b)
+real coal_Dot(Vec3 a, Vec3 b)
 {
-    return a.e[0] * b.e[0] 
-         + a.e[1] * b.e[1] 
+    return a.e[0] * b.e[0]
+         + a.e[1] * b.e[1]
          + a.e[2] * b.e[2];
 }
 
@@ -127,10 +127,10 @@ Vec3 coal_Cross(Vec3 a, Vec3 b)
 Vec3 coal_Mult_Mat4Vec3(Mat4 m, Vec3 v)
 {
     Vec3 out;
-    for (int i = 0; i < 3; i++) 
+    for (int i = 0; i < 3; i++)
     {
         out.e[i] = 0.0;
-        for (int j = 0; j < 3; j++) 
+        for (int j = 0; j < 3; j++)
         {
             out.e[i] += m.e[j][i] * v.e[j];
         }
@@ -141,10 +141,10 @@ Vec3 coal_Mult_Mat4Vec3(Mat4 m, Vec3 v)
 Vec4 coal_Mult_Mat4Vec4(Mat4 m, Vec4 v)
 {
     Vec4 out;
-    for (int i = 0; i < 4; i++) 
+    for (int i = 0; i < 4; i++)
     {
         out.e[i] = 0.0;
-        for (int j = 0; j < 4; j++) 
+        for (int j = 0; j < 4; j++)
         {
             out.e[i] += m.e[j][i] * v.e[j];
         }
@@ -155,22 +155,22 @@ Vec4 coal_Mult_Mat4Vec4(Mat4 m, Vec4 v)
 Mat4 coal_Mult_Mat4(Mat4 a, Mat4 b)
 {
     Mat4 out;
-    for (int i = 0; i < 4; i++) 
-        for (int j = 0; j < 4; j++) 
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++)
         {
             out.e[i][j] = 0;
-            for (int k = 0; k < 4; k++) 
+            for (int k = 0; k < 4; k++)
                 out.e[i][j] += a.e[i][k] * b.e[k][j];
         }
     return out;
 }
 
-Mat4 coal_BuildRotate(float angle, Vec3 axis)
+Mat4 coal_BuildRotate(real angle, Vec3 axis)
 {
-    const float x = axis.e[0];
-    const float y = axis.e[1];
-    const float z = axis.e[2];
-    const float a = angle;
+    const real x = axis.e[0];
+    const real y = axis.e[1];
+    const real z = axis.e[2];
+    const real a = angle;
     const Vec3 col1 = {
         cos(a) + x*x*(1 - cos(a)),
         x*y*(1 - cos(a)) + z*sin(a),
@@ -189,10 +189,10 @@ Mat4 coal_BuildRotate(float angle, Vec3 axis)
     return coal_BuildFromBasis_Mat4(col1.e, col2.e, col3.e);
 }
 
-Mat4 coal_RotateY_Mat4(float angle, Mat4 m)
+Mat4 coal_RotateY_Mat4(real angle, Mat4 m)
 {
-    const float c = cos(angle);
-    const float s = sin(angle);
+    const real c = cos(angle);
+    const real s = sin(angle);
     const Mat4 rot = {
         c, 0,-s, 0,
         0, 1, 0, 0,
@@ -202,10 +202,10 @@ Mat4 coal_RotateY_Mat4(float angle, Mat4 m)
     return coal_Mult_Mat4(rot, m);
 }
 
-Mat4 coal_RotateZ_Mat4(float angle, Mat4 m)
+Mat4 coal_RotateZ_Mat4(real angle, Mat4 m)
 {
-    const float c = cos(angle);
-    const float s = sin(angle);
+    const real c = cos(angle);
+    const real s = sin(angle);
     const Mat4 rot = {
         c, s, 0, 0,
        -s, c, 0, 0,
@@ -226,7 +226,7 @@ Mat4 coal_Translate_Mat4(const Vec3 t, const Mat4 m)
     return coal_Mult_Mat4(m, trans);
 }
 
-Mat4 coal_BuildFromBasis_Mat4(const float x[3], const float y[3], const float z[3])
+Mat4 coal_BuildFromBasis_Mat4(const real x[3], const real y[3], const real z[3])
 {
     const Mat4 m = (Mat4){
         x[0], x[1], x[2], 0,
@@ -251,7 +251,7 @@ Mat4 coal_LookAt(const Vec3 pos, const Vec3 target, const Vec3 up)
     return m;
 }
 
-void coal_LookAtInverse(const Mat4 m, float pivotDistance, Vec3* pos, Vec3* target, Vec3* up)
+void coal_LookAtInverse(const Mat4 m, real pivotDistance, Vec3* pos, Vec3* target, Vec3* up)
 {
     *pos = coal_GetTranslation_Mat4(m);
     Vec3 z = coal_GetLocalZ_Mat4(m);
@@ -276,11 +276,11 @@ Mat4 coal_LookAt_old(const Vec3 pos, const Vec3 target, const Vec3 up)
     return m;
 }
 
-Mat4 coal_ScaleUniform_Mat4(const float s, Mat4 m)
+Mat4 coal_ScaleUniform_Mat4(const real s, Mat4 m)
 {
-    for (int i = 0; i < 3; i++) 
+    for (int i = 0; i < 3; i++)
     {
-        for (int j = 0; j < 3; j++) 
+        for (int j = 0; j < 3; j++)
         {
             m.e[i][j] *= s;
         }
@@ -290,7 +290,7 @@ Mat4 coal_ScaleUniform_Mat4(const float s, Mat4 m)
 
 Mat4 coal_ScaleNonUniform_Mat4(const Vec3 s, Mat4 m)
 {
-    for (int i = 0; i < 3; i++) 
+    for (int i = 0; i < 3; i++)
     {
         m.e[i][i] = s.e[i];
     }
@@ -300,12 +300,12 @@ Mat4 coal_ScaleNonUniform_Mat4(const Vec3 s, Mat4 m)
 Mat4 coal_Transpose_Mat4(const Mat4 m)
 {
     Mat4 out;
-    for (int i = 0; i < 4; i++) 
+    for (int i = 0; i < 4; i++)
     {
-        for (int j = 0; j < 4; j++) 
+        for (int j = 0; j < 4; j++)
         {
             out.e[i][j] = m.e[j][i];
-        }  
+        }
     }
     return out;
 }
@@ -317,24 +317,24 @@ Vec2 coal_Translate_Vec2(const Vec2 t, Vec2 v)
     return v;
 }
 
-Vec2 coal_Scale_Vec2(const float s, Vec2 v)
+Vec2 coal_Scale_Vec2(const real s, Vec2 v)
 {
     v.x *= s;
     v.y *= s;
     return v;
 }
 
-float coal_Distance(const Vec2 a, const Vec2 b)
+real coal_Distance(const Vec2 a, const Vec2 b)
 {
     return coal_Length_Vec2(coal_Subtract(a, b));
 }
 
-float coal_Length_Vec2(const Vec2 v)
+real coal_Length_Vec2(const Vec2 v)
 {
     return sqrt(coal_Length2_Vec2(v));
 }
 
-float coal_Length2_Vec2(const Vec2 v)
+real coal_Length2_Vec2(const Vec2 v)
 {
     return v.x * v.x + v.y * v.y;
 }
@@ -364,18 +364,18 @@ Vec2 coal_Sub_Vec2(const Vec2 v1, const Vec2 v2)
     return coal_Subtract(v1, v2);
 }
 
-float coal_RandNeg(void)
+real coal_RandNeg(void)
 {
-    float r = rand() / (float)RAND_MAX;
+    real r = rand() / (real)RAND_MAX;
     return r * 2 - 1;
 }
 
-float coal_Determinant_Mat2(const Mat2 m)
+real coal_Determinant_Mat2(const Mat2 m)
 {
     return m.x00 * m.x11 - m.x10 * m.x01;
 }
 
-Vec2 coal_PolarToCart(const float angle, const float radius)
+Vec2 coal_PolarToCart(const real angle, const real radius)
 {
     Vec2 v = {
         cos(angle) * radius,
@@ -392,182 +392,182 @@ Vec3 coal_GetTranslation_Mat4(const Mat4 m)
 Vec3 coal_GetLocalX_Mat4(const Mat4 m)
 {
     return (Vec3){
-        m.e[0][0]/* + m.e[3][0] */, 
-        m.e[0][1]/* + m.e[3][1] */, 
+        m.e[0][0]/* + m.e[3][0] */,
+        m.e[0][1]/* + m.e[3][1] */,
         m.e[0][2]/* + m.e[3][2] */};
 }
 
 Vec3 coal_GetLocalY_Mat4(const Mat4 m)
 {
     return (Vec3){
-        m.e[1][0]/* + m.e[3][0] */, 
-        m.e[1][1]/* + m.e[3][1] */, 
+        m.e[1][0]/* + m.e[3][0] */,
+        m.e[1][1]/* + m.e[3][1] */,
         m.e[1][2]/* + m.e[3][2] */};
 }
 
 Vec3 coal_GetLocalZ_Mat4(const Mat4 m)
 {
     return (Vec3){
-        m.e[2][0]/* + m.e[3][0] */, 
-        m.e[2][1]/* + m.e[3][1] */, 
+        m.e[2][0]/* + m.e[3][0] */,
+        m.e[2][1]/* + m.e[3][1] */,
         m.e[2][2]/* + m.e[3][2] */};
 }
 
-float coal_Length_Vec3(const Vec3 v)
+real coal_Length_Vec3(const Vec3 v)
 {
     return sqrt(v.e[0] * v.e[0] + v.e[1] * v.e[1] + v.e[2] * v.e[2]);
 }
 
-float coal_Length_Vec4(const Vec4 v)
+real coal_Length_Vec4(const Vec4 v)
 {
     return sqrt(v.e[0] * v.e[0] + v.e[1] * v.e[1] + v.e[2] * v.e[2] + v.e[3] * v.e[3]);
 }
 
-Vec3 coal_Scale_Vec3(const float s, const Vec3 v)
+Vec3 coal_Scale_Vec3(const real s, const Vec3 v)
 {
     return (Vec3){v.e[0] * s, v.e[1] * s, v.e[2] * s};
 }
 
 Vec3 coal_Normalize_Vec3(const Vec3 v)
 {
-    const float m = coal_Length_Vec3(v);
+    const real m = coal_Length_Vec3(v);
     assert(m != 0.0);
     return (Vec3){v.e[0] / m, v.e[1] / m, v.e[2] / m};
 }
 
 Vec4 coal_Normalize_Vec4(const Vec4 v)
 {
-    const float m = coal_Length_Vec4(v);
+    const real m = coal_Length_Vec4(v);
     assert(m != 0.0);
     return (Vec4){v.e[0] / m, v.e[1] / m, v.e[2] / m, v.e[3] / m};
 }
 
 Mat4 coal_Invert4x4(const Mat4 mat)
 {
-    const float* const m = (float*)mat.e;
-    float inv[16];
+    const real* const m = (real*)mat.e;
+    real inv[16];
 
-    inv[0] = m[5]  * m[10] * m[15] - 
-             m[5]  * m[11] * m[14] - 
-             m[9]  * m[6]  * m[15] + 
+    inv[0] = m[5]  * m[10] * m[15] -
+             m[5]  * m[11] * m[14] -
+             m[9]  * m[6]  * m[15] +
              m[9]  * m[7]  * m[14] +
-             m[13] * m[6]  * m[11] - 
+             m[13] * m[6]  * m[11] -
              m[13] * m[7]  * m[10];
 
-    inv[4] = -m[4]  * m[10] * m[15] + 
-              m[4]  * m[11] * m[14] + 
-              m[8]  * m[6]  * m[15] - 
-              m[8]  * m[7]  * m[14] - 
-              m[12] * m[6]  * m[11] + 
+    inv[4] = -m[4]  * m[10] * m[15] +
+              m[4]  * m[11] * m[14] +
+              m[8]  * m[6]  * m[15] -
+              m[8]  * m[7]  * m[14] -
+              m[12] * m[6]  * m[11] +
               m[12] * m[7]  * m[10];
 
-    inv[8] = m[4]  * m[9] * m[15] - 
-             m[4]  * m[11] * m[13] - 
-             m[8]  * m[5] * m[15] + 
-             m[8]  * m[7] * m[13] + 
-             m[12] * m[5] * m[11] - 
+    inv[8] = m[4]  * m[9] * m[15] -
+             m[4]  * m[11] * m[13] -
+             m[8]  * m[5] * m[15] +
+             m[8]  * m[7] * m[13] +
+             m[12] * m[5] * m[11] -
              m[12] * m[7] * m[9];
 
-    inv[12] = -m[4]  * m[9] * m[14] + 
+    inv[12] = -m[4]  * m[9] * m[14] +
                m[4]  * m[10] * m[13] +
-               m[8]  * m[5] * m[14] - 
-               m[8]  * m[6] * m[13] - 
-               m[12] * m[5] * m[10] + 
+               m[8]  * m[5] * m[14] -
+               m[8]  * m[6] * m[13] -
+               m[12] * m[5] * m[10] +
                m[12] * m[6] * m[9];
 
-    inv[1] = -m[1]  * m[10] * m[15] + 
-              m[1]  * m[11] * m[14] + 
-              m[9]  * m[2] * m[15] - 
-              m[9]  * m[3] * m[14] - 
-              m[13] * m[2] * m[11] + 
+    inv[1] = -m[1]  * m[10] * m[15] +
+              m[1]  * m[11] * m[14] +
+              m[9]  * m[2] * m[15] -
+              m[9]  * m[3] * m[14] -
+              m[13] * m[2] * m[11] +
               m[13] * m[3] * m[10];
 
-    inv[5] = m[0]  * m[10] * m[15] - 
-             m[0]  * m[11] * m[14] - 
-             m[8]  * m[2] * m[15] + 
-             m[8]  * m[3] * m[14] + 
-             m[12] * m[2] * m[11] - 
+    inv[5] = m[0]  * m[10] * m[15] -
+             m[0]  * m[11] * m[14] -
+             m[8]  * m[2] * m[15] +
+             m[8]  * m[3] * m[14] +
+             m[12] * m[2] * m[11] -
              m[12] * m[3] * m[10];
 
-    inv[9] = -m[0]  * m[9] * m[15] + 
-              m[0]  * m[11] * m[13] + 
-              m[8]  * m[1] * m[15] - 
-              m[8]  * m[3] * m[13] - 
-              m[12] * m[1] * m[11] + 
+    inv[9] = -m[0]  * m[9] * m[15] +
+              m[0]  * m[11] * m[13] +
+              m[8]  * m[1] * m[15] -
+              m[8]  * m[3] * m[13] -
+              m[12] * m[1] * m[11] +
               m[12] * m[3] * m[9];
 
-    inv[13] = m[0]  * m[9] * m[14] - 
-              m[0]  * m[10] * m[13] - 
-              m[8]  * m[1] * m[14] + 
-              m[8]  * m[2] * m[13] + 
-              m[12] * m[1] * m[10] - 
+    inv[13] = m[0]  * m[9] * m[14] -
+              m[0]  * m[10] * m[13] -
+              m[8]  * m[1] * m[14] +
+              m[8]  * m[2] * m[13] +
+              m[12] * m[1] * m[10] -
               m[12] * m[2] * m[9];
 
-    inv[2] = m[1]  * m[6] * m[15] - 
-             m[1]  * m[7] * m[14] - 
-             m[5]  * m[2] * m[15] + 
-             m[5]  * m[3] * m[14] + 
-             m[13] * m[2] * m[7] - 
+    inv[2] = m[1]  * m[6] * m[15] -
+             m[1]  * m[7] * m[14] -
+             m[5]  * m[2] * m[15] +
+             m[5]  * m[3] * m[14] +
+             m[13] * m[2] * m[7] -
              m[13] * m[3] * m[6];
 
-    inv[6] = -m[0]  * m[6] * m[15] + 
-              m[0]  * m[7] * m[14] + 
-              m[4]  * m[2] * m[15] - 
-              m[4]  * m[3] * m[14] - 
-              m[12] * m[2] * m[7] + 
+    inv[6] = -m[0]  * m[6] * m[15] +
+              m[0]  * m[7] * m[14] +
+              m[4]  * m[2] * m[15] -
+              m[4]  * m[3] * m[14] -
+              m[12] * m[2] * m[7] +
               m[12] * m[3] * m[6];
 
-    inv[10] = m[0]  * m[5] * m[15] - 
-              m[0]  * m[7] * m[13] - 
-              m[4]  * m[1] * m[15] + 
-              m[4]  * m[3] * m[13] + 
-              m[12] * m[1] * m[7] - 
+    inv[10] = m[0]  * m[5] * m[15] -
+              m[0]  * m[7] * m[13] -
+              m[4]  * m[1] * m[15] +
+              m[4]  * m[3] * m[13] +
+              m[12] * m[1] * m[7] -
               m[12] * m[3] * m[5];
 
-    inv[14] = -m[0]  * m[5] * m[14] + 
-               m[0]  * m[6] * m[13] + 
-               m[4]  * m[1] * m[14] - 
-               m[4]  * m[2] * m[13] - 
-               m[12] * m[1] * m[6] + 
+    inv[14] = -m[0]  * m[5] * m[14] +
+               m[0]  * m[6] * m[13] +
+               m[4]  * m[1] * m[14] -
+               m[4]  * m[2] * m[13] -
+               m[12] * m[1] * m[6] +
                m[12] * m[2] * m[5];
 
-    inv[3] = -m[1] * m[6] * m[11] + 
-              m[1] * m[7] * m[10] + 
-              m[5] * m[2] * m[11] - 
-              m[5] * m[3] * m[10] - 
-              m[9] * m[2] * m[7] + 
+    inv[3] = -m[1] * m[6] * m[11] +
+              m[1] * m[7] * m[10] +
+              m[5] * m[2] * m[11] -
+              m[5] * m[3] * m[10] -
+              m[9] * m[2] * m[7] +
               m[9] * m[3] * m[6];
 
-    inv[7] = m[0] * m[6] * m[11] - 
-             m[0] * m[7] * m[10] - 
-             m[4] * m[2] * m[11] + 
-             m[4] * m[3] * m[10] + 
-             m[8] * m[2] * m[7] - 
+    inv[7] = m[0] * m[6] * m[11] -
+             m[0] * m[7] * m[10] -
+             m[4] * m[2] * m[11] +
+             m[4] * m[3] * m[10] +
+             m[8] * m[2] * m[7] -
              m[8] * m[3] * m[6];
 
-    inv[11] = -m[0] * m[5] * m[11] + 
-               m[0] * m[7] * m[9] + 
-               m[4] * m[1] * m[11] - 
-               m[4] * m[3] * m[9] - 
-               m[8] * m[1] * m[7] + 
+    inv[11] = -m[0] * m[5] * m[11] +
+               m[0] * m[7] * m[9] +
+               m[4] * m[1] * m[11] -
+               m[4] * m[3] * m[9] -
+               m[8] * m[1] * m[7] +
                m[8] * m[3] * m[5];
 
-    inv[15] = m[0] * m[5] * m[10] - 
-              m[0] * m[6] * m[9] - 
-              m[4] * m[1] * m[10] + 
-              m[4] * m[2] * m[9] + 
-              m[8] * m[1] * m[6] - 
+    inv[15] = m[0] * m[5] * m[10] -
+              m[0] * m[6] * m[9] -
+              m[4] * m[1] * m[10] +
+              m[4] * m[2] * m[9] +
+              m[8] * m[1] * m[6] -
               m[8] * m[2] * m[5];
 
-    float det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
+    real det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
 
     assert( det != 0 );
 
     det = 1.0 / det;
 
     Mat4 out;
-    float* const outx = (float*)out.e;
-    for (int i = 0; i < 16; i++) 
+    real* const outx = (real*)out.e;
+    for (int i = 0; i < 16; i++)
     {
         outx[i] = inv[i] * det;
     }
@@ -579,32 +579,32 @@ void coal_SetSeed(unsigned int seed)
     srand(seed);
 }
 
-float coal_Rand(void)
+real coal_Rand(void)
 {
-    return (float)rand() / (float)RAND_MAX;
+    return (real)rand() / (real)RAND_MAX;
 }
 
-float coal_RandRange(float min, float max)
+real coal_RandRange(real min, real max)
 {
-    const float width = max - min;
-    float x = (float)rand() / (float)RAND_MAX;
+    const real width = max - min;
+    real x = (real)rand() / (real)RAND_MAX;
     x = x * width + min;
     return x;
 }
 
-Vec3 coal_Rand_Vec3(float min, float max)
+Vec3 coal_Rand_Vec3(real min, real max)
 {
-    const float width = max - min;
-    float x = (float)rand() / (float)RAND_MAX;
-    float y = (float)rand() / (float)RAND_MAX;
-    float z = (float)rand() / (float)RAND_MAX;
-    x = x * width + min; 
-    y = y * width + min; 
-    z = z * width + min; 
+    const real width = max - min;
+    real x = (real)rand() / (real)RAND_MAX;
+    real y = (real)rand() / (real)RAND_MAX;
+    real z = (real)rand() / (real)RAND_MAX;
+    x = x * width + min;
+    y = y * width + min;
+    z = z * width + min;
     return (Vec3){x, y, z};
 }
 
-Vec3 coal_Lerp_Vec3(const Vec3 a, const Vec3 b, const float t)
+Vec3 coal_Lerp_Vec3(const Vec3 a, const Vec3 b, const real t)
 {
     assert(t >= 0.0 && t <= 1.0);
     Vec3 v;
