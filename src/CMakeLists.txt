@@ -10,7 +10,7 @@ if (NOT WIN32)
 else()
 	set_target_properties(coal PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 endif()
-add_library(Coal::Coal    ALIAS coal)
+add_library(Coal::Coal ALIAS coal)
 
 if(COAL_SIMPLE_TYPE_NAMES)
     target_compile_definitions(coal INTERFACE "COAL_SIMPLE_TYPE_NAMES")
