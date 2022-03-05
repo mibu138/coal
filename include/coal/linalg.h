@@ -37,9 +37,9 @@ Coal_Vec3 coal_RotateY_Vec3(real angle, Coal_Vec3 v);
 Coal_Mat4 coal_RotateZ_Mat4(real angle, Coal_Mat4 m);
 Coal_Vec2 coal_Mult_Mat2Vec2(Coal_Mat2 m, Coal_Vec2 v);
 
-static inline Coal_Mat2 coal_Mult_Mat2(Mat2 a, Mat2 b)
+static inline Coal_Mat2 coal_Mult_Mat2(Coal_Mat2 a, Coal_Mat2 b)
 {
-    Mat2 out;
+    Coal_Mat2 out;
     for (int i = 0; i < 2; i++)
         for (int j = 0; j < 2; j++)
         {
