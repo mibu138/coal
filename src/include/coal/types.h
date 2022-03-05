@@ -19,7 +19,7 @@ typedef union Coal_Vec2 {
     };
 #ifdef __cplusplus
     Coal_Vec2
-    operator+(const Coal_Vec2& v)
+    operator+(const Coal_Vec2& v) const
     {
         return {this->x + v.x, this->y + v.y};
     }
@@ -41,13 +41,13 @@ typedef union Coal_Vec2 {
     }
 
     Coal_Vec2
-    operator-(const Coal_Vec2& v)
+    operator-(const Coal_Vec2& v) const
     {
         return {this->x - v.x, this->y - v.y};
     }
 
     Coal_Vec2
-    operator*(const real s)
+    operator*(const real s) const
     {
         return {this->x * s, this->y * s};
     }
