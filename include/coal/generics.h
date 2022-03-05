@@ -8,9 +8,12 @@
 #define coal_mul(a, b) _Generic((a), \
             Coal_Mat2: _Generic((b), \
                Coal_Vec2: coal_Mult_Mat2Vec2, \
-               Coal_Mat2: coal_Mult_Mat2, \
-               float: coal_Scale_Mat2, \
-               double: coal_Scale_Mat2)) (a, b)
+               Coal_Mat2: coal_Mult_Mat2), \
+            float: _Generic((b), \
+                Coal_Mat2: coal_Scale_Mat2), \
+            double: _Generic((b), \
+                Coal_Mat2: coal_Scale_Mat2) \
+            ) (a, b)
 #define coal_rot(a, b) \
             _Generic((a), \
                 float: _Generic((b), \
@@ -21,7 +24,7 @@
 #define coal_print(a) _Generic((a), \
             Coal_Mat2: coal_PrintMat2) (a)
 #ifdef COAL_SIMPLE_FUNC_NAMES
-#define mul(...) coal_mul(__VA_ARGS__)
+#define mul(a, b) coal_mul(a, b)
 #define ident(a) coal_ident(a)
 #define rot(a, b) coal_rot(a, b)
 #endif

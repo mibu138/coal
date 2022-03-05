@@ -56,14 +56,13 @@ Coal_Vec4 coal_Mult_Mat4Vec4(Coal_Mat4 m, Coal_Vec4 v);
 Coal_Mat4 coal_Translate_Mat4(Coal_Vec3 t, Coal_Mat4 m);
 Coal_Mat4 coal_Transpose_Mat4(Coal_Mat4 m);
 Coal_Mat4 coal_ScaleUniform_Mat4(real s, Coal_Mat4 m);
-static inline Coal_Mat2 coal_Scale_Mat2(Coal_Mat2 m, real s)
+
+static inline Coal_Mat2 coal_Scale_Mat2(real s, Coal_Mat2 m)
 {
-    m.x00 *= s;
-    m.x01 *= s;
-    m.x10 *= s;
-    m.x11 *= s;
+    m.x00 *= s; m.x01 *= s; m.x10 *= s; m.x11 *= s;
     return m;
 }
+
 Coal_Mat4 coal_ScaleNonUniform_Mat4(Coal_Vec3 s, Coal_Mat4 m);
 Coal_Vec2 coal_Translate_Vec2(Coal_Vec2 t, Coal_Vec2);
 Coal_Vec2 coal_Scale_Vec2(real scale, Coal_Vec2);
