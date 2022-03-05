@@ -7,6 +7,9 @@ typedef double real;
 typedef float real;
 #endif
 
+#define COAL_PI  3.1415926535897932384626433
+#define COAL_TAU 2 * COAL_PI
+
 typedef union Coal_Vec2 {
     real e[2];
     struct {
@@ -90,8 +93,14 @@ typedef union Coal_Vec4 {
     };
 } Coal_Vec4;
 
-typedef struct Coal_Mat2 {
-    real x00, x01, x10, x11;
+typedef union Coal_Mat2 {
+    real e[2][2];
+    struct {
+        real x00;
+        real x01;
+        real x10;
+        real x11;
+    };
 } Coal_Mat2;
 
 typedef struct Coal_Mat3 {
@@ -121,6 +130,14 @@ typedef Coal_Mat3    Mat3;
 typedef Coal_Mat4    Mat4;
 typedef Coal_Ray     Ray;
 typedef Coal_Segment Segment;
+#ifdef PI
+#error
+#endif
+#ifdef TAU
+#error
+#endif
+#define PI  COAL_PI
+#define TAU COAL_TAU
 #endif
 
 #endif

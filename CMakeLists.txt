@@ -17,5 +17,5 @@ if(WIN32)
 	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 endif()
 
-add_subdirectory(src/lib)
-add_subdirectory(src/test)
+add_subdirectory(src)
+add_subdirectory(test)

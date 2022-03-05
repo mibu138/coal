@@ -1,7 +1,7 @@
 #ifndef COAL_SIMPLE_TYPE_NAMES
 #define COAL_SIMPLE_TYPE_NAMES
 #endif
-#include "linalg.h"
+#include "generics.h"
 #include "util.h"
 #include <math.h>
 #include <stdlib.h>
@@ -23,7 +23,7 @@
 _Static_assert(sizeof(Vec3) == 12, "Bad size for Vec3. Should be exactly 3 reals wide.");
 #endif
 
-static Vec2 coal_Mult_Mat2Vec2(Mat2 m, Vec2 v)
+Vec2 coal_Mult_Mat2Vec2(Mat2 m, Vec2 v)
 {
     real x = m.x00 * v.x + m.x01 * v.y;
     v.y = m.x10 * v.x + m.x11 * v.y;
@@ -72,6 +72,12 @@ Mat4 coal_BuildPerspective(const real nearDist, const real farDist)
         0,   0,  B,  0
     };
     return m;
+}
+
+Mat2 coal_Rotate_Mat2(real a, Mat2 m)
+{
+    Coal_Mat2 o = {cos(a), -sin(a), sin(a), cos(a)};
+    return coal_mul(o, m);
 }
 
 Vec2 coal_Rotate_Vec2(real angle, Vec2 v)
