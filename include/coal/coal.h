@@ -9,6 +9,7 @@ extern "C" {
 #include "linalg.h"
 #include "intersect.h"
 #include "util.h"
+#include "generics.h"
 
 #ifdef __cplusplus
 }

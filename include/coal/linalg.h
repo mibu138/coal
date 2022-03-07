@@ -23,6 +23,20 @@ Coal_Vec3 coal_Sub_Vec3(Coal_Vec3 a, Coal_Vec3 b);
 Coal_Vec3 coal_Normalize_Vec3(Coal_Vec3 v);
 Coal_Vec4 coal_Normalize_Vec4(Coal_Vec4 v);
 Coal_Vec3 coal_Scale_Vec3(real s, Coal_Vec3 v);
+static inline Coal_Ivec2 coal_Add_Ivec2(Coal_Ivec2 a, Coal_Ivec2 b)
+{
+    Coal_Ivec2 o;
+    o.x = a.x + b.x;
+    o.y = a.y + b.y;
+    return o;
+}
+static inline Coal_Vec2 coal_Add_Ivec2Vec2(Coal_Ivec2 a, Coal_Vec2 b)
+{
+    Coal_Vec2 o;
+    o.x = a.x + b.x;
+    o.y = a.y + b.y;
+    return o;
+}
 Coal_Vec3 coal_Cross(Coal_Vec3 a, Coal_Vec3 b);
 Coal_Mat4 coal_LookAt(Coal_Vec3 pos, Coal_Vec3 target, Coal_Vec3 up);
 void coal_LookAtInverse(const Coal_Mat4 m, real pivotDistance, Coal_Vec3* pos,
@@ -50,12 +64,28 @@ static inline Coal_Mat2 coal_Mult_Mat2(Coal_Mat2 a, Coal_Mat2 b)
     return out;
 }
 
+static inline Coal_Ivec2 coal_Floor_Vec2(Coal_Vec2 a)
+{
+    Coal_Ivec2 i;
+    i.x = a.x;
+    i.y = a.y;
+    return i;
+}
+
 Coal_Mat4 coal_Mult_Mat4(Coal_Mat4 a, Coal_Mat4 b);
 Coal_Vec3 coal_Mult_Mat4Vec3(Coal_Mat4 m, Coal_Vec3 v);
 Coal_Vec4 coal_Mult_Mat4Vec4(Coal_Mat4 m, Coal_Vec4 v);
 Coal_Mat4 coal_Translate_Mat4(Coal_Vec3 t, Coal_Mat4 m);
 Coal_Mat4 coal_Transpose_Mat4(Coal_Mat4 m);
 Coal_Mat4 coal_ScaleUniform_Mat4(real s, Coal_Mat4 m);
+
+static inline Coal_Vec2 coal_Scale_Ivec2(real s, Coal_Ivec2 v)
+{
+    Coal_Vec2 o;
+    o.x = s * v.x;
+    o.y = s * v.y;
+    return o;
+}
 
 static inline Coal_Mat2 coal_Scale_Mat2(real s, Coal_Mat2 m)
 {

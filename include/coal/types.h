@@ -57,6 +57,14 @@ typedef union Coal_Vec2 {
 #endif
 } Coal_Vec2;
 
+typedef union Coal_Ivec2 {
+    int e[2];
+    struct {
+        int x;
+        int y;
+    };
+} Coal_Ivec2;
+
 typedef union Coal_Vec3 {
     real e[3];
     struct {
@@ -128,6 +136,7 @@ typedef Coal_Vec4    Vec4;
 typedef Coal_Mat2    Mat2;
 typedef Coal_Mat3    Mat3;
 typedef Coal_Mat4    Mat4;
+typedef Coal_Ivec2   Ivec2;
 typedef Coal_Ray     Ray;
 typedef Coal_Segment Segment;
 #ifdef PI
