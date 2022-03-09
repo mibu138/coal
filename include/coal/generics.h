@@ -16,7 +16,11 @@
     _Generic((a), Coal_Ivec2                                                   \
              : _Generic((b), Coal_Ivec2                                        \
                         : coal_Add_Ivec2, Coal_Vec2                            \
-                        : coal_Add_Ivec2Vec2))(a, b)
+                        : coal_Add_Ivec2Vec2),                                 \
+               Coal_Vec2                                                       \
+             : _Generic((b), Coal_Vec2                                         \
+                        : coal_Add_Vec2)),                                     \
+        (a, b)
 
 #define coal_mul(a, b)                                                         \
     _Generic((a), double                                                       \
@@ -54,9 +58,10 @@
 #endif
 
 #ifdef COAL_SIMPLE_FUNC_NAMES
-#define mul   coal_mul
+#define add coal_add
+#define mul coal_mul
 #define ident coal_ident
-#define rot   coal_rot
+#define rot coal_rot
 #define floor coal_floor
 #endif
 

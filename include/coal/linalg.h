@@ -147,7 +147,6 @@ Coal_Vec3 coal_Rand_Vec3(real min, real max);
 #define scaleNonUniform_Mat4(p0, p1) coal_ScaleNonUniform_Mat4(p0, p1)
 #define translate_Vec2(p0, p1) coal_Translate_Vec2(p0, p1)
 #define scale_Vec2(p0, p1) coal_Scale_Vec2(p0, p1)
-#define add(p0, p1) coal_Add(p0, p1)
 #define add_Vec2(p0, p1) coal_Add_Vec2(p0, p1)
 #define distance(p0, p1) coal_Distance(p0, p1)
 #define dot(p0, p1) coal_Dot(p0, p1)
