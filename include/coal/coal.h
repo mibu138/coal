@@ -5,6 +5,11 @@
 extern "C" {
 #endif
 
+#ifdef COAL_SIMPLE_NAMES
+#define COAL_SIMPLE_TYPE_NAMES
+#define COAL_SIMPLE_FUNC_NAMES
+#endif
+
 #include "types.h"
 #include "linalg.h"
 #include "intersect.h"
