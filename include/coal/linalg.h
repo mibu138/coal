@@ -2,6 +2,7 @@
 #define COAL_LINALG_H
 
 #include "types.h"
+#include <math.h>
 
 #define COAL_MAT4_IDENT                                                        \
     (Coal_Mat4) { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }
@@ -67,8 +68,8 @@ static inline Coal_Mat2 coal_Mult_Mat2(Coal_Mat2 a, Coal_Mat2 b)
 static inline Coal_Ivec2 coal_Floor_Vec2(Coal_Vec2 a)
 {
     Coal_Ivec2 i;
-    i.x = a.x;
-    i.y = a.y;
+    i.x = floor(a.x);
+    i.y = floor(a.y);
     return i;
 }
 
