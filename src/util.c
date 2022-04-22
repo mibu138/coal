@@ -31,6 +31,16 @@ void coal_PrintMat2(const Mat2 m)
     }
 }
 
+void coal_PrintMat3(const Mat3 m)
+{
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            printf("%f ", m.e[i][j]);
+        }
+        printf("\n");
+    }
+}
+
 void coal_PrintMat4(const Mat4 m)
 {
     for (int i = 0; i < 4; i++)

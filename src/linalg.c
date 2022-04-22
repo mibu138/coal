@@ -144,6 +144,19 @@ Vec3 coal_Mult_Mat4Vec3(Mat4 m, Vec3 v)
     return out;
 }
 
+Vec3 coal_Mult_Mat3Vec3(Mat3 m, Vec3 v)
+{
+    Vec3 out;
+    for (int i = 0; i < 3; i++) {
+        out.e[i] = 0.0;
+        for (int j = 0; j < 3; j++) {
+            out.e[i] += m.e[j][i] * v.e[j];
+        }
+    }
+    return out;
+}
+
+
 Vec4 coal_Mult_Mat4Vec4(Mat4 m, Vec4 v)
 {
     Vec4 out;
@@ -446,6 +459,30 @@ Vec4 coal_Normalize_Vec4(const Vec4 v)
     const real m = coal_Length_Vec4(v);
     assert(m != 0.0);
     return (Vec4){v.e[0] / m, v.e[1] / m, v.e[2] / m, v.e[3] / m};
+}
+
+Mat3 coal_Invert3x3(const Mat3 mat)
+{
+    const float (*m)[3] = mat.e;
+
+    double det = m[0][0] * (m[1][1] * m[2][2] - m[2][1] * m[1][2]) -
+                 m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) +
+                 m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]);
+
+    double invdet = 1 / det;
+
+    Mat3 out; 
+    float (*minv)[3] = out.e;
+    minv[0][0] = (m[1][1] * m[2][2] - m[2][1] * m[1][2]) * invdet;
+    minv[0][1] = (m[0][2] * m[2][1] - m[0][1] * m[2][2]) * invdet;
+    minv[0][2] = (m[0][1] * m[1][2] - m[0][2] * m[1][1]) * invdet;
+    minv[1][0] = (m[1][2] * m[2][0] - m[1][0] * m[2][2]) * invdet;
+    minv[1][1] = (m[0][0] * m[2][2] - m[0][2] * m[2][0]) * invdet;
+    minv[1][2] = (m[1][0] * m[0][2] - m[0][0] * m[1][2]) * invdet;
+    minv[2][0] = (m[1][0] * m[2][1] - m[2][0] * m[1][1]) * invdet;
+    minv[2][1] = (m[2][0] * m[0][1] - m[0][0] * m[2][1]) * invdet;
+    minv[2][2] = (m[0][0] * m[1][1] - m[1][0] * m[0][1]) * invdet;
+    return out;
 }
 
 Mat4 coal_Invert4x4(const Mat4 mat)

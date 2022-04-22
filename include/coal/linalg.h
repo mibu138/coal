@@ -76,6 +76,7 @@ static inline Coal_Ivec2 coal_Floor_Vec2(Coal_Vec2 a)
 Coal_Mat4 coal_Mult_Mat4(Coal_Mat4 a, Coal_Mat4 b);
 Coal_Vec3 coal_Mult_Mat4Vec3(Coal_Mat4 m, Coal_Vec3 v);
 Coal_Vec4 coal_Mult_Mat4Vec4(Coal_Mat4 m, Coal_Vec4 v);
+Coal_Vec3 coal_Mult_Mat3Vec3(Coal_Mat3 m, Coal_Vec3 v);
 Coal_Mat4 coal_Translate_Mat4(Coal_Vec3 t, Coal_Mat4 m);
 Coal_Mat4 coal_Transpose_Mat4(Coal_Mat4 m);
 Coal_Mat4 coal_ScaleUniform_Mat4(real s, Coal_Mat4 m);
@@ -101,6 +102,7 @@ Coal_Vec2 coal_Add(Coal_Vec2, Coal_Vec2);
 Coal_Vec2 coal_Add_Vec2(Coal_Vec2, Coal_Vec2); // calls coal_Add
 real      coal_Distance(Coal_Vec2 a, Coal_Vec2 b);
 real      coal_Dot(Coal_Vec3 a, Coal_Vec3 b);
+// first - second
 Coal_Vec2 coal_Subtract(Coal_Vec2, Coal_Vec2);
 Coal_Vec2 coal_Sub_Vec2(Coal_Vec2, Coal_Vec2); // calls coal_Subtract
 // returns a random real between 0 and 1
@@ -111,6 +113,7 @@ real      coal_Length_Vec2(Coal_Vec2);
 real      coal_Length2_Vec2(Coal_Vec2);
 real      coal_Determinant_Mat2(Coal_Mat2);
 Coal_Vec2 coal_PolarToCart(real angle, real radius);
+Coal_Mat3 coal_Invert3x3(const Coal_Mat3 mat);
 Coal_Mat4 coal_Invert4x4(Coal_Mat4);
 Coal_Vec3 coal_Lerp_Vec3(Coal_Vec3 a, Coal_Vec3 b, real t);
 real      coal_Rand(void);
