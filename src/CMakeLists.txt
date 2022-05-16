@@ -23,3 +23,6 @@ endif()
 if(COAL_64_BIT_REAL)
     target_compile_definitions(coal INTERFACE "COAL_64_BIT_REAL")
 endif()
+
+target_compile_options(coal PRIVATE -Wall -Wextra
+    -Wno-missing-field-initializers -Wno-missing-braces)

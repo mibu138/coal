@@ -66,6 +66,11 @@ static bool pointInCircle(Vec2 point, Vec2 center, const float radius)
     return (length_Vec2(point) < radius * radius);
 }
 
+bool coal_segment_intersect(Coal_Segment seg1, Coal_Segment seg2)
+{
+    return segmentIntersect(seg1, seg2);
+}
+
 #define EPSILON 0.000001
 // Moller & Trumbore triangle intersection algorithm
 // this culls all triangles facing away

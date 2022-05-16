@@ -1,6 +1,4 @@
-#ifndef COAL_SIMPLE_TYPE_NAMES
 #define COAL_SIMPLE_TYPE_NAMES
-#endif
 #include "generics.h"
 #include "util.h"
 #include <math.h>
@@ -655,4 +653,42 @@ Vec3 coal_Lerp_Vec3(const Vec3 a, const Vec3 b, const real t)
     v.e[1] = a.e[1] * (1.0 - t) + b.e[1] * t;
     v.e[2] = a.e[2] * (1.0 - t) + b.e[2] * t;
     return v;
+}
+
+Vec2 coal_lerp_vec2(const Vec2 a, const Vec2 b, const real t)
+{
+    assert(t >= 0.0 && t <= 1.0);
+    Vec2 v;
+    v.e[0] = a.e[0] * (1.0 - t) + b.e[0] * t;
+    v.e[1] = a.e[1] * (1.0 - t) + b.e[1] * t;
+    return v;
+}
+
+real coal_segment_length(Segment seg)
+{
+    Vec2 diff = coal_Sub_Vec2(seg.B, seg.A);
+    return coal_Length_Vec2(diff);
+}
+
+void coal_get_samples_along_line_segment(Segment seg, real rad, Vec2* buf, int max_samples, int* sample_count)
+{
+    assert(max_samples > 0);
+    assert(rad > 0.0);
+    // always sample at the segment beginning
+    int i = 1;
+    real seglen = coal_segment_length(seg);
+
+    buf[0] = seg.A;
+    if (rad < seglen)
+    {
+        const real stepsize = rad / seglen;
+        real t = stepsize;
+        while (t <= 1.0 && i < max_samples)
+        {
+            buf[i] = coal_lerp_vec2(seg.A, seg.B, t);
+            t += stepsize;
+            ++i;
+        }
+    }
+    *sample_count = i;
 }

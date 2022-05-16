@@ -3,27 +3,25 @@
 
 #include "types.h"
 #include <math.h>
+#include <stdbool.h>
 
 #define COAL_MAT4_IDENT                                                        \
     (Coal_Mat4) { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 }
 
-static inline Coal_Mat2 coal_ident_mat2()
-{
-    return (Coal_Mat2){1, 0, 0, 1};
-}
+static inline Coal_Mat2 coal_ident_mat2() { return (Coal_Mat2){1, 0, 0, 1}; }
 
 // START FUNCDECLS
-Coal_Mat4 coal_Ident_Mat4(void);
-Coal_Mat4 coal_BuildPerspective(real nearDist, real farDist);
-Coal_Vec3 coal_GetLocalX_Mat4(Coal_Mat4 m);
-Coal_Vec3 coal_GetLocalY_Mat4(Coal_Mat4 m);
-Coal_Vec3 coal_GetLocalZ_Mat4(Coal_Mat4 m);
-Coal_Vec3 coal_GetTranslation_Mat4(Coal_Mat4 m);
-Coal_Vec3 coal_Add_Vec3(Coal_Vec3 a, Coal_Vec3 b);
-Coal_Vec3 coal_Sub_Vec3(Coal_Vec3 a, Coal_Vec3 b);
-Coal_Vec3 coal_Normalize_Vec3(Coal_Vec3 v);
-Coal_Vec4 coal_Normalize_Vec4(Coal_Vec4 v);
-Coal_Vec3 coal_Scale_Vec3(real s, Coal_Vec3 v);
+Coal_Mat4                coal_Ident_Mat4(void);
+Coal_Mat4                coal_BuildPerspective(real nearDist, real farDist);
+Coal_Vec3                coal_GetLocalX_Mat4(Coal_Mat4 m);
+Coal_Vec3                coal_GetLocalY_Mat4(Coal_Mat4 m);
+Coal_Vec3                coal_GetLocalZ_Mat4(Coal_Mat4 m);
+Coal_Vec3                coal_GetTranslation_Mat4(Coal_Mat4 m);
+Coal_Vec3                coal_Add_Vec3(Coal_Vec3 a, Coal_Vec3 b);
+Coal_Vec3                coal_Sub_Vec3(Coal_Vec3 a, Coal_Vec3 b);
+Coal_Vec3                coal_Normalize_Vec3(Coal_Vec3 v);
+Coal_Vec4                coal_Normalize_Vec4(Coal_Vec4 v);
+Coal_Vec3                coal_Scale_Vec3(real s, Coal_Vec3 v);
 static inline Coal_Ivec2 coal_Add_Ivec2(Coal_Ivec2 a, Coal_Ivec2 b)
 {
     Coal_Ivec2 o;
@@ -38,10 +36,18 @@ static inline Coal_Vec2 coal_Add_Ivec2Vec2(Coal_Ivec2 a, Coal_Vec2 b)
     o.y = a.y + b.y;
     return o;
 }
+static inline bool coal_equal_vec2(Coal_Vec2 a, Coal_Vec2 b)
+{
+    return (a.x == b.x && a.y == b.y);
+}
+static inline bool coal_equal_ivec2(Coal_Ivec2 a, Coal_Ivec2 b)
+{
+    return (a.x == b.x && a.y == b.y);
+}
 Coal_Vec3 coal_Cross(Coal_Vec3 a, Coal_Vec3 b);
 Coal_Mat4 coal_LookAt(Coal_Vec3 pos, Coal_Vec3 target, Coal_Vec3 up);
-void coal_LookAtInverse(const Coal_Mat4 m, real pivotDistance, Coal_Vec3* pos,
-                        Coal_Vec3* target, Coal_Vec3* up);
+void coal_LookAtInverse(const Coal_Mat4 m, real pivotDistance, Coal_Vec3 *pos,
+                        Coal_Vec3 *target, Coal_Vec3 *up);
 Coal_Mat2 coal_Rotate_Mat2(real a, Coal_Mat2 m);
 Coal_Vec2 coal_Rotate_Vec2(real angle /* radians */, Coal_Vec2);
 Coal_Mat4 coal_RotateY_Mat4(real angle, Coal_Mat4 m);
@@ -56,8 +62,7 @@ static inline Coal_Mat2 coal_Mult_Mat2(Coal_Mat2 a, Coal_Mat2 b)
 {
     Coal_Mat2 out;
     for (int i = 0; i < 2; i++)
-        for (int j = 0; j < 2; j++)
-        {
+        for (int j = 0; j < 2; j++) {
             out.e[i][j] = 0;
             for (int k = 0; k < 2; k++)
                 out.e[i][j] += a.e[i][k] * b.e[k][j];
@@ -91,7 +96,10 @@ static inline Coal_Vec2 coal_Scale_Ivec2(real s, Coal_Ivec2 v)
 
 static inline Coal_Mat2 coal_Scale_Mat2(real s, Coal_Mat2 m)
 {
-    m.x00 *= s; m.x01 *= s; m.x10 *= s; m.x11 *= s;
+    m.x00 *= s;
+    m.x01 *= s;
+    m.x10 *= s;
+    m.x11 *= s;
     return m;
 }
 
@@ -119,6 +127,10 @@ Coal_Vec3 coal_Lerp_Vec3(Coal_Vec3 a, Coal_Vec3 b, real t);
 real      coal_Rand(void);
 real      coal_RandRange(real min, real max);
 Coal_Vec3 coal_Rand_Vec3(real min, real max);
+real      coal_segment_length(Coal_Segment seg);
+void      coal_get_samples_along_line_segment(Coal_Segment seg, real rad,
+                                              Coal_Vec2 *buf, int max_samples,
+                                              int *sample_count);
 // END FUNCDECLS
 
 #ifdef COAL_SIMPLE_FUNC_NAMES
