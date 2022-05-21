@@ -19,3 +19,5 @@ endif()
 
 add_subdirectory(src)
 add_subdirectory(test)
+
+add_compile_options(-Wno-missing-braces)

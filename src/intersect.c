@@ -109,3 +109,25 @@ bool coal_PointInBox(float x, float y, float bx, float by, float bw, float bh)
 {
     return !( bx - x > 0 || bx - x + bw < 0 ) && !( by - y > 0 || by - y + bh < 0 );
 }
+
+bool coal_square_segment_intersect(Segment line, Vec2 xy, float r)
+{
+    // starting at the bottom left corner of the quad, do a line intersect test
+    // for each edge of the quad moving counter-clockwise through the edges.
+    Vec2 a, b;
+    // the last element is equal to the first and handles the loop back on the
+    // last edge. this redundancy keeps the for-loop simpler.
+    int d[] = {0, 1, 1, 0, 0};
+    
+    b = xy;
+
+    for (int i = 0; i < 4; ++i) {
+        a = b;
+        b.x = xy.x + d[i + 1] * r;
+        b.y = xy.y + d[i] * r;
+        if (coal_segment_intersect(line, (Segment){a, b}))
+            return true;
+    }
+
+    return false;
+}

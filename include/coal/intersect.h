@@ -9,3 +9,7 @@ int  coal_TriangleIntersect(Coal_Vec3 orig, Coal_Vec3 dir, Coal_Vec3 vert0,
                             real* v);
 bool coal_AABBIntersect(real x1, real y1, real w1, real h1, real x2, real y2, real w2, real h2);
 bool coal_PointInBox(real x, real y, real bx, real by, real bw, real bh);
+
+bool coal_square_segment_intersect(Coal_Segment line,
+                                   Coal_Vec2    lower_left_corner,
+                                   real         side_length);
